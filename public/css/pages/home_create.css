@@ -1,0 +1,351 @@
+#home_create {
+
+    /* 전체 폼 한 줄 컨테이너 */
+    .form-item {
+        display: flex;
+        /* 가로 배치 */
+        align-items: center;
+        /* 수직 중앙 정렬 */
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+        /* 하단 구분선 (선택사항) */
+    }
+
+    /* --- 왼쪽 라벨 스타일 --- */
+    .label-area {
+        width: 140px;
+        /* 라벨 영역 고정 너비 (줄 맞춤용) */
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        /* 화면이 줄어도 라벨 너비 유지 */
+    }
+
+    .label-text {
+        font-size: 15px;
+        font-weight: 700;
+        /* 굵게 */
+        color: #333;
+    }
+
+    /* 필수 표시 (*) */
+    .required {
+        color: var(--vscode-blue);
+        /* 네이버 그린 */
+        margin-left: 4px;
+        margin-right: 6px;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 1;
+        /* 높이 틀어짐 방지 */
+    }
+
+    /* 물음표 버튼 (?) */
+    .help-btn {
+        width: 18px;
+        height: 18px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        border-radius: 50%;
+        /* 동그라미 */
+        color: #888;
+        font-size: 11px;
+        cursor: pointer;
+        display: flex;
+        /* 글자 중앙 정렬 */
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        /* 버튼 기본 패딩 제거 */
+    }
+
+    /* --- 오른쪽 입력창 스타일 --- */
+    .input-area {
+        flex-grow: 1;
+        /* 남은 공간 꽉 채우기 */
+    }
+
+    .custom-input {
+        width: 100%;
+        height: 46px;
+        /* 넉넉한 높이 */
+        padding: 0 14px;
+        border: 1px solid #ddd;
+        /* 연한 테두리 */
+        border-radius: 0;
+        /* 각진 모서리 (이미지 참고) */
+        background-color: #fff;
+        /* 또는 아주 연한 회색 #fcfcfc */
+        font-size: 14px;
+        color: #333;
+        box-sizing: border-box;
+        /* 패딩 포함 크기 계산 */
+        transition: border-color 0.2s;
+    }
+
+    /* 포커스 되었을 때 (클릭 시) */
+    .custom-input:focus {
+        outline: none;
+        border-color: var(--vscode-blue);
+        /* 입력 중일 때 초록색 테두리 */
+        box-shadow: 0 0 0 2px rgba(3, 199, 90, 0.1);
+        /* 살짝 빛나는 효과 (옵션) */
+    }
+
+    /* 플레이스홀더 색상 */
+    .custom-input::placeholder {
+        color: #999;
+    }
+
+    /* --- Textarea 스타일 --- */
+    .custom-textarea {
+        width: 100%;
+        height: 100px;
+        /* 적당한 높이 설정 */
+        padding: 12px 14px;
+        /* input보다 약간 넉넉한 상하 패딩 */
+        border: 1px solid #ddd;
+        border-radius: 0;
+        /* 각진 모서리 */
+        background-color: #fafafa;
+        /* 이미지처럼 아주 연한 회색 배경 (흰색을 원하시면 #fff로 변경) */
+        font-size: 14px;
+        color: #333;
+        resize: none;
+        /* 사용자가 크기 조절 못하게 고정 */
+        box-sizing: border-box;
+        font-family: inherit;
+        /* 폰트 상속 */
+        line-height: 1.5;
+        /* 줄 간격 확보 */
+    }
+
+    .custom-textarea:focus {
+        outline: none;
+        border-color: var(--vscode-blue);
+        /* 네이버 그린 포커스 */
+        background-color: #fff;
+        /* 포커스 시 밝아지는 효과 (선택사항) */
+    }
+
+    .custom-textarea::placeholder {
+        color: #999;
+    }
+
+    /* --- 하단 정보 영역 (안내문구 + 카운터) --- */
+    .input-info {
+        display: flex;
+        justify-content: space-between;
+        /* 양쪽 끝으로 배치 */
+        align-items: flex-start;
+        /* 위쪽 기준 정렬 */
+        margin-top: 8px;
+        /* 입력창과의 간격 */
+        font-size: 12px;
+        color: #888;
+    }
+
+    .guide-text {
+        /* 필요하다면 최대 너비 설정 */
+        max-width: 80%;
+        line-height: 1.4;
+    }
+
+    .char-count {
+        font-weight: 400;
+        color: #aaa;
+        margin-left: 10px;
+    }
+
+    /* --- 구분선 --- */
+    .divider {
+        height: 1px;
+        background-color: #e5e7eb;
+        margin: 10px 20px;
+    }
+
+    /* --- 공통 유틸리티 --- */
+    .flex-row {
+        display: flex;
+        align-items: center;
+    }
+
+    /* --- 카페 주소 섹션 --- */
+    .url-prefix {
+        font-size: 14px;
+        color: #333;
+        margin-right: 8px;
+        font-family: 'Helvetica', sans-serif;
+        /* 주소는 영문 폰트가 어울림 */
+    }
+
+    .address-input {
+        width: 240px;
+        /* 주소 입력창은 너무 길지 않게 */
+        margin-right: 8px;
+    }
+
+    .btn-dark {
+        height: 46px;
+        padding: 0 14px;
+        background-color: #555;
+        /* 짙은 회색 버튼 */
+        color: #fff;
+        border: 1px solid #555;
+        border-radius: 4px;
+        /* 살짝 둥글게 (이미지 참고) */
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .btn-dark:hover {
+        background-color: #333;
+    }
+
+    /* --- 카페 아이콘 섹션 --- */
+    .icon-preview-box {
+        position: relative;
+        width: 90px;
+        height: 90px;
+        background-color: #e4e6eb;
+        /* 아이콘 배경 회색 */
+        border-radius: 26px;
+        /* 둥근 사각형 (Squircle) */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        /* 크기 줄어듦 방지 */
+    }
+
+    .default-icon {
+        font-size: 40px;
+        color: #fff;
+        /* 아이콘 흰색 */
+    }
+
+    .camera-btn {
+        position: absolute;
+        bottom: -4px;
+        right: -4px;
+        width: 28px;
+        height: 28px;
+        background-color: #555;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        /* 테두리로 분리된 느낌 */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .icon-desc {
+        margin-left: 16px;
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    /* --- 카페 공개 설정 섹션 --- */
+    .radio-group {
+        display: flex;
+        gap: 30px;
+        /* 옵션 간 간격 */
+    }
+
+    .radio-item {
+        cursor: pointer;
+    }
+
+    .radio-top {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+    }
+
+    /* 라디오 버튼 커스텀 (네이버 그린 적용) */
+    .radio-top input[type="radio"] {
+        accent-color: var(--vscode-blue);
+        /* 최신 브라우저용 색상 변경 */
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        margin-right: 6px;
+        cursor: pointer;
+    }
+
+    .radio-title {
+        font-size: 14px;
+        color: #000000;
+        font-weight: 500;
+        /* 살짝 굵게 */
+    }
+
+    .radio-desc {
+        font-size: 12px;
+        color: #999;
+        margin: 0;
+        padding-left: 24px;
+        /* 라디오 버튼 너비만큼 들여쓰기 */
+    }
+
+    .bottom-helper-text {
+        margin-top: 15px;
+        font-size: 12px;
+        color: #888;
+    }
+
+    /* --- 하단 버튼 영역 --- */
+    .submit-area {
+        display: flex;
+        justify-content: center;
+        /* 버튼들을 가운데 정렬 */
+        gap: 10px;
+        /* 버튼 사이 간격 */
+        margin-top: 50px;
+        /* 폼과의 간격 넉넉하게 */
+        margin-bottom: 50px;
+    }
+
+    /* 버튼 공통 스타일 */
+    .btn-cancel,
+    .btn-submit {
+        min-width: 120px;
+        /* 버튼 최소 너비 설정 (너무 작아지지 않게) */
+        height: 48px;
+        /* 버튼 높이 */
+        border: none;
+        border-radius: 6px;
+        /* 모서리 둥글게 */
+        font-size: 16px;
+        font-weight: 700;
+        /* 글자 굵게 */
+        cursor: pointer;
+        transition: opacity 0.2s;
+        /* 호버 효과 부드럽게 */
+    }
+
+    /* 마우스 올렸을 때 공통 효과 */
+    .btn-cancel:hover,
+    .btn-submit:hover {
+        opacity: 0.8;
+    }
+
+    /* 취소 버튼 스타일 (회색 배경 + 검은 글씨) */
+    .btn-cancel {
+        background-color: #eff0f2;
+        /* 아주 연한 회색 */
+        color: #333;
+    }
+
+    /* 만들기 버튼 스타일 (민트 배경 + 초록 글씨) */
+    .btn-submit {
+        background-color: var(--vscode-blue-bg);
+        /* 연한 민트색 배경 */
+        color: var(--vscode-blue);
+        /* 네이버 그린 텍스트 */
+    }
+}

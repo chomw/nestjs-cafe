@@ -1,0 +1,31 @@
+<aside id="sidebar_right" class="sidebar-right">
+    <div class="login-box">
+        {{#if user}}
+        <div class="user-info">
+            <div class="avatar-wrap">
+                <img src="{{user.profile_img}}" alt="프로필" class="avatar-img"
+                    onerror="this.src='/images/avatar-default.jpg'">
+                <button class="setting-btn" aria-label="설정">⚙️</button>
+            </div>
+            <div class="user-details">
+                <div class="user-name">
+                    <strong>{{user.nickname}}</strong>님
+                </div>
+            </div>
+            <button id="logout-btn" class="logout-btn">로그아웃</button>
+        </div>
+        <a href="/api/create" class="create-cafe-btn">카페 만들기</a>
+        {{else}}
+        <a href="/api/login" class="create-cafe-btn">로그인</a>
+        {{/if}}
+    </div>
+
+    <div class="notice-box">
+        <h3>공지사항</h3>
+        <ul>
+            <li>안전한 중고거래 가이드</li>
+            <li>카페 서비스 점검 안내</li>
+        </ul>
+    </div>
+</aside>
+<script src="/js/sidebar_right.js"></script>

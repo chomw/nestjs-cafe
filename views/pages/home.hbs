@@ -1,0 +1,16 @@
+<div id="home">
+    <div class="tab-area">
+        <button class="tab active">내 카페</button>
+        <button class="tab">즐겨찾는 게시판</button>
+    </div>
+
+    <div class="cafe-feed">
+        {{#each cafeList}}
+        <div class="cafe-card">
+            <div class="cafe-header">
+                <h3 class="cafe-name">{{this.name}}</h3>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

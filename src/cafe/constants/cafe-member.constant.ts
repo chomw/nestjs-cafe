@@ -1,0 +1,20 @@
+/**
+ * 카페 멤버 상태 (Status)
+ */
+export enum CafeMemberStatus {
+  ACTIVE = 0,   // 활동중
+  PENDING = 1,  // 가입 승인 대기
+  LEFT = 2,     // 자진 탈퇴
+  BANNED = 3,   // 강제 탈퇴 (차단)
+}
+
+/**
+ * 카페 멤버 등급 (Level)
+ */
+export enum CafeMemberLevel {
+  MANAGER = 10,     // 매니저
+  SUB_MANAGER = 9,  // 부매니저
+  REGULAR = 2,      // 정회원
+  ASSOCIATE = 1,    // 준회원
+  WAITING = 0,      // 가입 대기
+}

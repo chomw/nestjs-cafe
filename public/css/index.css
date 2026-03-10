@@ -1,0 +1,49 @@
+/* 초기화 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f5f6f8;
+  font-family: 'Malgun Gothic', sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
+:root {
+  /* VS Code 스타일 블루 (추천) */
+  --vscode-blue: #007fd4;
+  --vscode-blue-hover: #006ab1;
+  --vscode-blue-bg: #c3d8ec;     /* 아주 연한 파랑 (배경) */
+  --naver-green: #03c75a;
+  --bg-hover: #f5f6f8;
+  --text-main: #222;
+  --text-sub: #666;
+}
+
+/* 레이아웃 골격 */
+.container {
+  display: flex;
+  /* Flexbox 사용 */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px;
+  /* 컬럼 사이 간격 */
+}
+
+/* 메인 컨텐츠 (가변 너비) */
+.main-content {
+  flex-grow: 1;
+  /* 남은 공간 모두 차지 */
+  min-width: 0;
+  /* 말줄임표 처리를 위해 필수 */
+}
+
+
+
+

@@ -1,0 +1,164 @@
+#header {
+
+    background: #fff;
+    border-bottom: 1px solid #e5e7ea;
+
+    .inner {
+        max-width: 1280px;
+        /* 전체 너비 제한 */
+        margin: 0 auto;
+        /* 중앙 정렬 */
+        height: 80px;
+        /* 헤더 높이 고정 */
+        padding: 0 20px;
+
+        /* [Flexbox] 로고와 검색창 가로 정렬 & 수직 중앙 정렬 */
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        /* 로고와 검색창 사이 간격 */
+    }
+
+    /* --- 1. 로고 영역 스타일 --- */
+    .logo-area {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        /* 링크 밑줄 제거 */
+        color: #000;
+        font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+    }
+
+    .b-box {
+        background-color: var(--vscode-blue);
+        color: #fff;
+        font-weight: 900;
+        font-size: 18px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+        border-radius: 50%;
+    }
+
+    .b-box span {
+        transform: translateY(-1px);
+    }
+
+    /* logo 텍스트 */
+    .logo-text {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    /* 구분선 (|) */
+    .logo-divider {
+        width: 1px;
+        height: 18px;
+        background-color: #d3d5d7;
+        /* 옅은 회색 */
+        margin: 0 12px;
+        /* 좌우 여백 */
+        display: inline-block;
+    }
+
+
+    /* --- 검색창 스타일 (Naver Style) --- */
+
+    .search-bar {
+        /* 헤더 중앙 정렬을 위해 필요하다면 width 조정 */
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .search-input-box {
+        display: flex;
+        /* 내부 요소 가로 정렬 */
+        align-items: center;
+        /* 수직 중앙 정렬 */
+        width: 400px;
+        /* 검색창 너비 */
+        height: 46px;
+        /* 검색창 높이 */
+        background: #fff;
+        border: 1px solid var(--vscode-blue);
+        /* vscode blue 테두리 (이미지는 회색 같지만 보통 포커스시 blue) */
+        /* 만약 이미지처럼 평소에 회색을 원하면 border: 1px solid #e5e7ea; 로 변경하세요 */
+        border-radius: 50px;
+        /* 둥근 알약 모양 핵심 */
+        padding: 0 15px 0 20px;
+        /* 내부 여백 (좌측 텍스트, 우측 아이콘) */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        /* 살짝 그림자 */
+        transition: border-color 0.2s;
+    }
+
+    /* 포커스 되었을 때 효과 (선택사항) */
+    .search-input-box:focus-within {
+        border-color: var(--vscode-blue-hover);
+        /* 포커스 시 진한 파랑색 */
+    }
+
+    /* 실제 input 태그 스타일 초기화 */
+    .search-input-box input {
+        flex-grow: 1;
+        /* 남은 공간 모두 차지 */
+        border: none;
+        /* 기본 테두리 제거 */
+        outline: none;
+        /* 포커스 라인 제거 */
+        background: transparent;
+        /* 배경 투명 */
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .search-input-box input::placeholder {
+        color: #999;
+    }
+
+    /* --- 우측 아이콘들 --- */
+    .search-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        /* 아이콘 사이 간격 */
+    }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 물음표 아이콘 스타일 */
+    .help-btn {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #eaebef;
+        color: #666;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    /* 화살표 아이콘 스타일 */
+    .arrow-btn {
+        color: #666;
+        font-size: 12px;
+    }
+
+    /* 검색 돋보기 버튼 */
+    .search-btn {
+        margin-left: 5px;
+    }
+}

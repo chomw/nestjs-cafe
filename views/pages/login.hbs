@@ -1,0 +1,30 @@
+<div id="intro-page">
+    <div class="intro-wrapper">
+        
+        <div class="intro-left"></div>
+
+        <div class="intro-divider"></div>
+
+        <div class="intro-right">
+            <div class="login-box">
+                <h1 class="logo-title">B Cafe</h1>
+                
+                <form id="login_form" action="/api/auth/login" method="POST">
+                    <div class="input-stack">
+                        <input type="text" id="login_id" name="login_id" class="custom-input" placeholder="아이디" required>
+                        <input type="password" id="password" name="password" class="custom-input" placeholder="비밀번호" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit login-btn">로그인</button>
+                </form>
+
+                <div class="signup-section">
+                    <p class="signup-guide">계정이 없으신가요?</p>
+                    <button type="button" class="btn-cancel signup-btn" onclick="location.href='/api/signup'">새 계정 만들기</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/js/login.js"></script>

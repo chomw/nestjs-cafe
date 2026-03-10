@@ -1,0 +1,31 @@
+#home {
+    .cafe-card {
+        background: #fff;
+        border: 1px solid #e5e7ea;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .cafe-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .cafe-name {
+        font-size: 16px;
+        margin-left: 10px;
+        font-weight: bold;
+    }
+
+    .post-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        color: #666;
+        font-size: 13px;
+    }
+
+
+}

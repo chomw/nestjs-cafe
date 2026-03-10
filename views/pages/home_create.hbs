@@ -1,0 +1,110 @@
+<div id="home_create" class="form-container">
+    <h2>카페 만들기</h2>
+    <hr class="divider">
+    <form id="home_create_form" action="/api/cafe" method="POST">
+        <div class="form-item">
+            <div class="label-area">
+                <span class="label-text">카페이름</span>
+                <span class="required">*</span>
+                <button type="button" class="help-btn" title="도움말">?</button>
+            </div>
+
+            <div class="input-area">
+                <input type="text" id="cafeName" class="custom-input" placeholder="카페 이름을 입력해주세요" maxlength="50">
+            </div>
+        </div>
+        <div class="form-item border-top">
+            <div class="label-area">
+                <span class="label-text">카페주소</span>
+                <span class="required">*</span>
+                <button type="button" class="help-btn" title="도움말">?</button>
+            </div>
+            <div class="input-area flex-row">
+                <span class="url-prefix">https://bluishcafe.com/</span>
+                <input type="text" id="cafeAddress" class="custom-input address-input" placeholder="카페 주소를 입력해주세요" maxlength="50">
+                <button type="button" class="btn-dark">자동생성</button>
+            </div>
+        </div>
+
+        <div class="form-item border-top">
+            <div class="label-area">
+                <span class="label-text">카페아이콘</span>
+            </div>
+            <div class="input-area flex-row">
+                <div class="icon-preview-box">
+                    <i class="fa-solid fa-mug-hot default-icon"></i>
+                    <button type="button" class="camera-btn">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                </div>
+                <div class="icon-desc">
+                    모바일에서 우리 카페를 표현할 카페 아이콘을 등록해주세요.<br>
+                    등록하신 아이콘은 모바일 웹, 카페 앱 및 PC 카페 > 네임 카페 등에 활용됩니다.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-item border-top">
+            <div class="label-area">
+                <span class="label-text">카페 공개 설정</span>
+                <span class="required">*</span>
+            </div>
+            <div class="input-area">
+                <div class="radio-group">
+
+                    <label class="radio-item">
+                        <div class="radio-top">
+                            <input type="radio" name="public_type" value="0" checked>
+                            <span class="radio-title">공개(바로 가입)</span>
+                        </div>
+                        <p class="radio-desc">누구나 바로 가입</p>
+                    </label>
+
+                    <label class="radio-item">
+                        <div class="radio-top">
+                            <input type="radio" name="public_type" value="1">
+                            <span class="radio-title">공개(가입 승인)</span>
+                        </div>
+                        <p class="radio-desc">매니저 승인 후 가입</p>
+                    </label>
+
+                    <label class="radio-item">
+                        <div class="radio-top">
+                            <input type="radio" name="public_type" value="2">
+                            <span class="radio-title">비공개(초대 승인)</span>
+                        </div>
+                        <p class="radio-desc">매니저 초대를 통해 가입</p>
+                    </label>
+
+                </div>
+
+                <p class="bottom-helper-text">
+                    신규 카페의 경우 개설 후 24시간 경과 후에 검색에 반영됩니다.
+                </p>
+            </div>
+        </div>
+        <div class="form-item border-top">
+            <div class="label-area">
+                <span class="label-text">카페 설명</span>
+                <span class="required">*</span>
+            </div>
+
+            <div class="input-area">
+                <textarea id="cafeDescription" class="custom-textarea" placeholder="카페 설명을 입력해주세요." maxlength="100"></textarea>
+
+                <div class="input-info">
+                    <span class="guide-text">입력한 내용이 카페 메인, 검색결과등의 카페리스트에 반영 됩니다.</span>
+                    <span class="char-count">0/100</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="submit-area">
+            <button type="button" class="btn-cancel" onclick="history.back()">취소</button>
+
+            <button type="submit" class="btn-submit" id="homeCreateBtn">만들기</button>
+        </div>
+    </form>
+</div>
+<script src="/js/home_create.js"></script>
