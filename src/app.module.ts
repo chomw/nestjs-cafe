@@ -24,7 +24,7 @@ import * as Joi from 'joi';
         DATABASE_PORT: Joi.number().default(3306), 
         DATABASE_USER: Joi.string().required(),
         DATABASE_PASSWORD: Joi.string().required(),
-        DATEBASE_DB_NAME: Joi.string().required(),
+        DATABASE_DB_NAME: Joi.string().required(),
         
         // Redis 설정
         REDIS_HOST: Joi.string().required(),
@@ -39,7 +39,7 @@ import * as Joi from 'joi';
         port: configService.get<number>('DATABASE_PORT'),
         username: configService.get<string>('DATABASE_USER'),
         password: configService.get<string>('DATABASE_PASSWORD'),
-        database: configService.get<string>('DATEBASE_DB_NAME'),
+        database: configService.get<string>('DATABASE_DB_NAME'),
         autoLoadEntities: true,             // 엔터티 자동 로드: entities 배열에 일일이 넣지 않아도 됨. TypeOrmModule.forFeature()로 각 도메인 모듈에서 등록은 해야 함.
         synchronize: configService.get<string>('NODE_ENV') !== 'production',
         logging: true

@@ -1,9 +1,55 @@
 version: '3.8'
 
 services:
+  # 1. Database (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: cafe_mysql
+    restart: always
+    ports:
+      - '3306:3306'
+    env_file:
+      - env/.env    
+    volumes:
+      - db_data:/var/lib/mysql # 컨테이너가 꺼져도 데이터가 날아가지 않도록 로컬과 연결
+    # 도커가 MySQL이 완전히 켜졌는지 확인하는 로직
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s   # 10초마다 한 번씩 찔러봄
+      timeout: 5s     # 5초 안에 대답이 없으면 실패로 간주
+      retries: 5      # 최대 5번까지 재시도
+  # 2. Cache / Session (Redis)
   redis:
     image: redis:alpine
-    container_name: nest-redis
-    ports:
-      - "6379:6379"
+    container_name: cafe_redis
     restart: always
+    ports:
+      - '6379:6379'
+    # 도커가 Redis가 완전히 켜졌는지 확인하는 로직
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
+  # 3. Backend (Nest.js Application)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cafe_api
+    restart: always
+    ports:
+      - '80:3000'
+    env_file:
+      - env/.env.production
+    # db와 redis가 'healthy(건강함)' 상태가 될 때까지 api 실행을 대기함!
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+# MySQL 데이터를 영구적으로 저장하기 위한 볼륨 선언
+volumes:
+  db_data:
