@@ -8,8 +8,32 @@
         {{#each cafeList}}
         <div class="cafe-card">
             <div class="cafe-header">
-                <h3 class="cafe-name">{{this.name}}</h3>
+                <div class="cafe-thumbnail">
+                    {{#if this.imageUrl}}
+                    <img src="{{this.imageUrl}}" alt="{{this.name}}">
+                    {{else}}                    
+                    <i class="fa-solid fa-mug-hot default-icon"></i>
+                    {{/if}}
+                </div>
+
+                <div class="cafe-title-area">
+                    <a href="/cafe/{{this.id}}" class="cafe-name">{{this.name}}</a>
+                    <span class="new-post-count">새 글 {{this.newPostCount}}</span>
+                </div>
             </div>
+
+            <ul class="post-list">
+                {{#each this.posts}}
+                <li>
+                    <a href="/post/{{this.postId}}" class="post-title">{{this.title}}</a>
+                    <div class="post-meta">
+                        <span class="author">{{this.author}}</span>
+                        <span class="dot">·</span>
+                        <span class="date">{{this.date}}</span>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
         </div>
         {{/each}}
     </div>

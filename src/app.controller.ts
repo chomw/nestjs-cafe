@@ -32,18 +32,39 @@ export class AppController {
       cafeList: [
         {
           name: "오랑's Essay in Atlanta",
-          newPosts: 1,
           posts: [
-            { title: '(260211)외환 시장, 극단의 동상이몽!', writer: '오랑', date: '2026.02.11.' },
-            { title: '(260210)엔 약세... 우주 방어!', writer: '오랑', date: '2026.02.10.' },
+            { postId: 1, title: '(260211)외환 시장, 극단의 동상이몽!', author: '오랑', date: '2026.02.11.' },
+            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
+            { postId: 1, title: '맨 앞에 서지 않는 법 - AI 시대', author: '게임개발자', date: '22시간 전' },
           ]
         },
         {
           name: "온라인서버제작자모임",
-          newPosts: 1,
           posts: [
-            { title: '맨 앞에 서지 않는 법 - AI 시대', writer: '게임개발자', date: '22시간 전' },
-            { title: '운영 피로도 없이 굴러가는 수익', writer: '게임개발자', date: '2026.02.10.' },
+            { postId: 1, title: '맨 앞에 서지 않는 법 - AI 시대', author: '게임개발자', date: '22시간 전' },
+            { postId: 1, title: '운영 피로도 없이 굴러가는 수익', author: '게임개발자', date: '2026.02.10.' },
+          ]
+        },
+        {
+          name: "오랑's Essay in Atlanta",
+          posts: [
+            { postId: 1, title: '(260211)외환 시장, 극단의 동상이몽!', author: '오랑', date: '2026.02.11.' },
+            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
+          ]
+        },
+        {
+          name: "온라인서버제작자모임",
+          posts: [
+            { postId: 1, title: '맨 앞에 서지 않는 법 - AI 시대', author: '게임개발자', date: '22시간 전' },
+            { postId: 1, title: '운영 피로도 없이 굴러가는 수익', author: '게임개발자', date: '2026.02.10.' },
+          ]
+        },
+        {
+          name: "오랑's Essay in Atlanta",
+          posts: [
+            { postId: 1, itle: '(260211)외환 시장, 극단의 동상이몽!', author: '오랑', date: '2026.02.11.' },
+            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
+            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
           ]
         }
       ]
