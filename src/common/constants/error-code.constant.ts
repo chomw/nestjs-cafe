@@ -13,4 +13,6 @@ export enum ErrorCode {
     CAFE_NOT_FOUND                  = 30002,
     ALREADY_JOINED_MEMBER           = 30003,
     BANNED_MEMBER                   = 30004,
+    NOT_CAFE_MEMBER                 = 30005,
+    INVALID_MEMBER_STATUS           = 30006,
 }

@@ -1,0 +1,46 @@
+<div id="cafe-home">
+    <div class="post-feed">
+        {{#each posts}}
+        <div class="post-item">
+            <div class="post-info">
+                <a href="/post/{{this.id}}" class="post-title">{{this.title}}</a>
+                <div class="post-meta">
+                    <span class="meta-item">조회 {{this.viewCount}}</span>
+                    <span class="meta-item"><i class="fa-regular fa-heart"></i> {{this.likeCount}}</span>
+                    <span class="meta-item"><i class="fa-regular fa-comment"></i> {{this.commentCount}}</span>
+                </div>
+                <div class="post-author">
+                    <span class="author-name">작성자명</span> <span class="dot">·</span> <span
+                        class="board-name">게시판이름</span>
+                </div>
+            </div>
+            {{#if this.thumbnailUrl}}
+            <div class="post-thumbnail">
+                <img src="{{this.thumbnailUrl}}" alt="썸네일">
+            </div>
+            {{/if}}
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <div class="search-area">
+        <select class="search-select">
+            <option>전체기간</option>
+        </select>
+        <select class="search-select">
+            <option>글 + 댓글</option>
+            <option>제목만</option>
+        </select>
+        <div class="search-input-wrap">
+            <input type="text" placeholder="검색어를 입력해주세요" class="search-input">
+            <button class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+</div>

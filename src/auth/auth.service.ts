@@ -30,7 +30,7 @@ export class AuthService {
 
     // 토큰 발급 및 Redis 저장 (Controller에서 호출)
     async login(user: any) {
-        const payload = { login_id: user.login_id, sub: user.id, nickname: user.nickname, profile_img: user.profile_img };    // 토큰에 담을 정보 (최소화하는 것이 좋음)
+        const payload = { login_id: user.login_id, id: user.id, nickname: user.nickname, profile_img: user.profile_img };    // 토큰에 담을 정보 (최소화하는 것이 좋음)
 
         // Access Token 생성
         const accessToken = this.jwtService.sign(payload);
@@ -59,7 +59,7 @@ export class AuthService {
             throw new BusinessException(ErrorCode.INVALID_TOKEN, HttpStatus.UNAUTHORIZED);
         }
 
-        const payload = { login_id: user.login_id, sub: user.id, nickname: user.nickname, profile_img: user.profile_img };
+        const payload = { login_id: user.login_id, id: user.id, nickname: user.nickname, profile_img: user.profile_img };
         const newAccessToken = this.jwtService.sign(payload);
         const newRefreshToken = this.jwtService.sign(payload, { expiresIn: AuthTokenExpiresIn.REFRESH });
 

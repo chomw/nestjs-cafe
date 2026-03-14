@@ -18,7 +18,7 @@ export class CafeMember {
     id: string;
 
     @Column({ name: 'cafe_id', type: 'int', unsigned: true, comment: '카페 ID' })
-    cafeId: string;
+    cafeId: number;
 
     @Column({ name: 'user_id', type: 'bigint', unsigned: true, comment: '유저 ID' })
     userId: string;

@@ -1,25 +1,29 @@
-import { Controller, Get, Render, Param, Query, Redirect, Inject, UseGuards, Logger } from '@nestjs/common';
+import { Controller, Get, Render, Param, Query, Redirect, Inject, UseGuards, Logger, Res } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import type { Cache } from 'cache-manager';
 import { GetUser } from './auth/decorators/get-user.decorator';
 import { SsrOptionalAuthGuard } from './auth/guards/ssr-optional-auth.guards';
+import { CafeService } from './cafe/cafe.service';
+import type { Response } from 'express';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Controller()
 export class AppController {
   private readonly logger = new Logger(AppController.name);
-
-  constructor(private readonly appService: AppService, @Inject(CACHE_MANAGER) private cacheManager: Cache) { }
+  
+  constructor(
+    private readonly appService: AppService, 
+    private readonly cafeService: CafeService,
+  ) { }
 
   @Get()
-  @Redirect('/api/home', 302)
+  @Redirect('/home', 302)
   getRoot() {
     
   }
 
   // 1. 카페 홈 (기본 레이아웃 적용)
   @UseGuards(SsrOptionalAuthGuard)
-  @Get('/api/home')
+  @Get('/home')
   @Render('pages/home') // views/pages/home.hbs의 내용을 가져옴
   getHome(@GetUser() user: any) {    
     
@@ -72,7 +76,7 @@ export class AppController {
   }
 
   // 2. 회원가입 화면 (auth 레이아웃 덮어쓰기)
-  @Get('/api/signup')
+  @Get('/signup')
   @Render('pages/signup') // views/pages/signup.hbs의 내용을 가져옴
   getSignup() {
     return { 
@@ -82,7 +86,7 @@ export class AppController {
     };
   }
 
-  @Get('/api/login')
+  @Get('/login')
   @Render('pages/login')
   getLogin() {    
     return {       
@@ -92,7 +96,7 @@ export class AppController {
   }
 
   @UseGuards(SsrOptionalAuthGuard)
-  @Get('/api/create')
+  @Get('/cafe/create')
   @Render('pages/home_create')
   getCafeCreate(@GetUser() user: any) {    
     return { 
@@ -101,15 +105,81 @@ export class AppController {
      }; 
   }
 
-  // @Get('redis-test')
-  // async testRedis() {
-  //   //await this.cacheManager.set('myKey', 'Hello Redis!', 10000);
+  @UseGuards(SsrOptionalAuthGuard)
+  @Get('/cafe/:address')
+  @Render('pages/cafe-home')
+  async getCafeHome(
+    @GetUser() user: any, 
+    @Param('address') address: string,
+    @Res() res: Response
+  ) {    
 
-  //   const value = await this.cacheManager.get('myKey');
+    const cafe = await this.cafeService.getCafeByAddress(address);
 
-  //   return {
-  //     message: 'Redis 연결 완벽하게 성공!',
-  //     dataFromRedis:value
-  //   }
-  // }
+    // 카페가 존재하지 않으면 홈으로 이동
+    if (!cafe) {
+      return res.redirect('/home');
+    }
+
+    // const recentPosts = await this.cafePostService.getRecentPosts(cafe.id);
+
+    return {       
+      layout: 'layouts/cafe-layout', 
+      showSidebar: true,
+      title: cafe.name,
+      user,
+      cafe
+     }; 
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/cafe/:address/post/new')
+  @Render('pages/cafe-post-create')
+  async getCafePostCreate(
+    @GetUser() user: any, 
+    @Param('address') address: string,
+    @Res() res: Response
+  ) {    
+
+    const cafe = await this.cafeService.getCafeByAddress(address);
+
+    // 카페가 존재하지 않으면 홈으로 이동
+    if (!cafe) {
+      return res.redirect('/home');
+    }
+
+    return {       
+      layout: 'layouts/cafe-layout', 
+      showSidebar: false,
+      title: '글쓰기',
+      user,
+      cafe
+     }; 
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/cafe/:address/post/:postId')
+  @Render('pages/cafe-post-detail')
+  async getCafePostDetail(
+    @GetUser() user: any, 
+    @Param('address') address: string,
+    @Param('postId') postId: number,
+    @Res() res: Response
+  ) {    
+
+    const cafe = await this.cafeService.getCafeByAddress(address);
+
+    // 카페가 존재하지 않으면 홈으로 이동
+    if (!cafe) {
+      return res.redirect('/home');
+    }
+
+    return {       
+      layout: 'layouts/cafe-layout', 
+      showSidebar: false,
+      title: '글쓰기',
+      user,
+      cafe
+     }; 
+  }
 }

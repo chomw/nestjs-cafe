@@ -14,7 +14,7 @@ window.fetchWithAuth = async function(url, options = {}) {
         if (!refreshResponse.ok) {
             // 갱신 실패. 로그인 페이지로 이동
             alert('세션이 만료되었습니다. 다시 로그인해 주세요.');
-            window.location.href = '/api/login';
+            window.location.href = '/login';
             return null; 
         }
 

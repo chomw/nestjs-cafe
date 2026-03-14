@@ -16,4 +16,6 @@ export const ErrorMessageMap: Record<ErrorCode, string> = {
   [ErrorCode.CAFE_NOT_FOUND]              : '카페를 찾을 수 없습니다.',
   [ErrorCode.ALREADY_JOINED_MEMBER]       : '이미 가입되었거나 대기 중인 상태입니다.',
   [ErrorCode.BANNED_MEMBER]               : '해당 카페에서 강제 탈퇴되었습니다.',    
+  [ErrorCode.NOT_CAFE_MEMBER]             : '카페에 가입한 멤버만 글을 작성할 수 있습니다.',
+  [ErrorCode.INVALID_MEMBER_STATUS]       : '현재 글을 작성할 수 있는 상태가 아닙니다.',
 };

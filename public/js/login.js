@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(result.message || '로그인이 성공적으로 완료되었습니다!');
                 
                 // 로그인 성공시 홈으로 이동
-                window.location.href = '/api/home'; 
+                window.location.href = '/home'; 
             } else {
                 const errorData = await response.json();
                 
