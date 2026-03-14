@@ -53,4 +53,8 @@ export class CafePostService {
 
         return post;
     }
+
+    async getPostList(cafe, page, count) {
+
+    }
 }

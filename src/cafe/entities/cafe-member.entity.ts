@@ -10,6 +10,7 @@ import { CafeMemberStatus, CafeMemberLevel } from '../constants/cafe-member.cons
 
 @Entity({ name: 'cafe_member' })
 @Unique('uk_cafe_user', ['cafeId', 'userId'])
+@Unique('uk_cafe_nickname', ['cafeId', 'nickname'])
 @Index('idx_cafe_status_visit', ['cafeId', 'status', 'lastVisitDate'])
 @Index('idx_cafe_status_join', ['cafeId', 'status', 'joinDate'])
 export class CafeMember {

@@ -9,6 +9,7 @@ import { BusinessException } from 'src/common/exceptions/business.exception';
 import { CafeMember } from './entities/cafe-member.entity';
 import { CafeMemberLevel, CafeMemberStatus } from './constants/cafe-member.constant';
 import { CafePost } from './entities/cafe-post.entity';
+import { CreateCafeMemberDto } from './dto/create-cafe-member.dto';
 
 @Injectable()
 export class CafeService {
@@ -112,15 +113,56 @@ export class CafeService {
    * @param userId 유저 아이디
    * @returns 
    */
-  async getMember(userId: string): Promise<CafeMember> {
+  async getMember(userId: string): Promise<CafeMember | null > {
     const member = await this.cafeMemberRepository.findOne({
       where: { userId },
     });
+    
+    return member;
+  }
 
-    if (!member) {
-      throw new BusinessException(ErrorCode.NOT_CAFE_MEMBER, HttpStatus.FORBIDDEN);
+  /**
+   * 카페 가입 처리
+   * 
+   * @param userId 
+   * @param dto 
+   */
+  async joinCafe(userId: string, dto: CreateCafeMemberDto): Promise<CafeMember> {
+    const cafe = await this.cafeRepository.findOneBy({ id: dto.cafeId });
+    if (!cafe) {
+      throw new BusinessException(ErrorCode.CAFE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    return member;
+    // 이미 가입된 멤버인지 중복 체크
+    const existingMember = await this.cafeMemberRepository.findOneBy({ 
+      cafeId: cafe.id, 
+      userId 
+    });
+
+    if (existingMember) {
+      throw new BusinessException(ErrorCode.ALREADY_JOINED_MEMBER, HttpStatus.CONFLICT); 
+    }
+
+    const existingNickname = await this.cafeMemberRepository.findOneBy({
+      cafeId: cafe.id,
+      nickname: dto.nickname
+    });
+
+    if (existingNickname) {
+      throw new BusinessException(ErrorCode.NICKNAME_ALREADY_EXISTS, HttpStatus.CONFLICT);
+    }
+
+    const newMember = this.cafeMemberRepository.create({
+      cafeId: cafe.id,
+      userId,
+      nickname: dto.nickname,
+      profile_img: dto.profile_img,
+      level: CafeMemberLevel.REGULAR,
+      status: CafeMemberStatus.ACTIVE,       
+      visitCount: 1,
+    });
+
+    await this.cafeMemberRepository.save(newMember);
+    return newMember;
   }
 }

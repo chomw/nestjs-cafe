@@ -57,7 +57,17 @@
     text-decoration: none;      /* 링크 밑줄 제거 */
     box-sizing: border-box;     /* 패딩 때문에 너비가 삐져나가지 않도록 */
 }
-.write-post-btn { background: var(--vscode-blue); color: #fff; border: none; }
+
+.write-post-btn { 
+    background: var(--vscode-blue); 
+    color: #fff; 
+    border: none; 
+    transition: background-color 0.2s ease; /* ✨ 색상이 부드럽게 변하도록 애니메이션 효과 추가 */
+}
+
+.write-post-btn:hover { 
+    background: var(--vscode-blue-hover, #006ab1); /* 변수가 선언되어 있지 않을 경우를 대비해 기본값(#006ab1) 세팅 */
+}
 
 /* 멤버 소식 / 랭킹 */
 .sidebar-box h4 { font-size: 13px; margin-bottom: 10px; }

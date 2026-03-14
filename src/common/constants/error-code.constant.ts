@@ -15,6 +15,7 @@ export enum ErrorCode {
     BANNED_MEMBER                   = 30004,
     NOT_CAFE_MEMBER                 = 30005,
     INVALID_MEMBER_STATUS           = 30006,
+    NICKNAME_ALREADY_EXISTS         = 30007,
 
     POST_NOT_FOUND                  = 40001,
 }

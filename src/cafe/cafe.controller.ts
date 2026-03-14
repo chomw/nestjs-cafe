@@ -8,6 +8,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { CreateCafePostDto } from './dto/create-cafe-post.dto';
 import { CafePostService } from './cafe-post.service';
+import { CreateCafeMemberDto } from './dto/create-cafe-member.dto';
 
 @Controller('api/cafe')
 export class CafeController {
@@ -35,5 +36,15 @@ export class CafeController {
     const cafePost = await this.cafePostService.createPost(user.id, createCafePostDto);
 
     return { postId: cafePost.id };
+  }
+
+  @Post('join')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(TransformInterceptor)
+  @UseFilters(HttpExceptionFilter)
+  async join(
+    @GetUser() user: any, 
+    @Body() createCafeMemberDto: CreateCafeMemberDto) {
+    return await this.cafeService.joinCafe(user.id, createCafeMemberDto);
   }
 }

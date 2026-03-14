@@ -1,0 +1,73 @@
+<div id="cafe-join">
+    <div class="cafe-join-wrap">
+        <div class="join-header">
+            <h1 class="page-title">카페 가입하기</h1>
+            <p class="page-subtitle">카페 가입을 위한 정보를 입력해주세요.</p>
+        </div>
+
+        <div class="join-container">
+
+            <div class="form-row">
+                <div class="row-label">카페설명</div>
+                <div class="row-content">
+                    <p class="cafe-desc">{{cafe.description}}</p>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="row-label">프로필 이미지</div>
+
+                <div class="row-content flex-row">
+                    <div class="icon-preview-box">
+                        <i class="fa-solid fa-user default-icon"></i>
+
+                        {{!-- TODO: 이미지 업로드 기능 개발 후 미리보기 기능 추가할 것 --}}
+                        <img src="" alt="프로필 미리보기" id="profile_preview_img" class="profile-img-preview"
+                            style="display: none;">
+
+                        <button type="button" class="camera-btn"
+                            onclick="document.getElementById('profile_img').click()">
+                            <i class="fa-solid fa-camera"></i>
+                        </button>
+                    </div>
+
+                    <div class="icon-desc">
+                        프로필은 카페별로 설정할 수 있습니다.<br>
+                        <span style="color: #999; font-size: 12px;">(선택 사항입니다)</span>
+                    </div>
+
+                    <input type="file" id="profile_img" name="profile_img" style="display: none;" accept="image/*">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="row-label">별명</div>
+                <div class="row-content nickname-section">
+                    <div class="input-wrap">
+                        <input type="text" class="nickname-input" value="{{user.nickname}}" placeholder="별명을 입력해주세요">
+                        <button type="button" class="btn-clear" aria-label="지우기">&times;</button>
+                    </div>
+                    {{!-- <div class="nickname-status">
+                        <span class="status-msg success">사용할 수 있는 별명입니다.</span>
+                        <span class="byte-count">6/20bytes</span>
+                    </div> --}}
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <ul>
+                    <li>· 가입 신청이 수락되면 '내소식' 에서 알려드립니다.</li>
+                    <li>· 가입 신청 후 3개월 이상 수락되지 않으면 자동 신청 해제 됩니다.</li>
+                    <li>· 이 카페에서 활동하는 동안 원활한 카페 운영을 위하여 (필수) 아이디, 별명, 활동내역이 이 카페의 운영진에게 공개되며, 최소한의 제재 기록은 카페 탈퇴 후에도
+                        보관됩니다. 본 동의를 거부하실 수 있으나, 카페 가입이 불가능합니다.</li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="submit-section">
+            <button type="button" class="btn-submit" data-cafe-id="{{cafe.id}}" data-address="{{cafe.address}}">동의 후 가입하기</button>
+        </div>
+
+    </div>
+</div>
+<script src="/js/cafe-join.js"></script>

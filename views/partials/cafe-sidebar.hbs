@@ -18,7 +18,17 @@
             <li><i class="fa-solid fa-user-group"></i> {{cafe.memberCount}} <a href="#" class="invite-btn">초대</a></li>
             <li><i class="fa-solid fa-location-dot"></i> 대한민국</li>
         </ul>
-        <a href="/cafe/{{cafe.address}}/post/new" class="write-post-btn">카페 글쓰기</a>
+
+        {{#if isMember}}
+            <a href="/cafe/{{cafe.address}}/post/new" class="write-post-btn">카페 글쓰기</a>
+        {{else}}
+            {{#if user}}
+                <a href="/cafe/{{cafe.address}}/join" class="write-post-btn">카페 가입하기</a>
+            {{else}}
+                <a href="/login?redirect=/cafe/{{cafe.address}}" class="write-post-btn" onclick="alert('로그인이 필요한 서비스입니다.');">카페 가입하기</a>
+            {{/if}}
+        {{/if}}
+
         <button class="chat-btn">카페 채팅</button>
     </div>
 
@@ -66,7 +76,7 @@
         const minutes = String(now.getMinutes()).padStart(2, '0');
         document.getElementById('clock-ampm').innerText = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
-        hours = hours ? hours : 12; 
+        hours = hours ? hours : 12;
         document.getElementById('clock-time').innerText = `${String(hours).padStart(2, '0')}:${minutes}`;
     }
     setInterval(updateClock, 1000);

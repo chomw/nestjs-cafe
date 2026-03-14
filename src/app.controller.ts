@@ -1,4 +1,4 @@
-import { Controller, Get, Render, Param, Query, Redirect, Inject, UseGuards, Logger, Res } from '@nestjs/common';
+import { Controller, Get, Render, Param, Query, Redirect, Inject, UseGuards, Logger, Res, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { GetUser } from './auth/decorators/get-user.decorator';
 import { SsrOptionalAuthGuard } from './auth/guards/ssr-optional-auth.guards';
@@ -6,13 +6,16 @@ import { CafeService } from './cafe/cafe.service';
 import type { Response } from 'express';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { CafePostService } from './cafe/cafe-post.service';
+import { BusinessException } from './common/exceptions/business.exception';
+import { ErrorCode } from './common/constants/error-code.constant';
+import { CafeMember } from './cafe/entities/cafe-member.entity';
 
 @Controller()
 export class AppController {
   private readonly logger = new Logger(AppController.name);
-  
+
   constructor(
-    private readonly appService: AppService, 
+    private readonly appService: AppService,
     private readonly cafeService: CafeService,
     private readonly cafePostService: CafePostService,
   ) { }
@@ -20,21 +23,27 @@ export class AppController {
   @Get()
   @Redirect('/home', 302)
   getRoot() {
-    
+
   }
 
   // 1. 카페 홈 (기본 레이아웃 적용)
   @UseGuards(SsrOptionalAuthGuard)
   @Get('/home')
   @Render('pages/home') // views/pages/home.hbs의 내용을 가져옴
-  getHome(@GetUser() user: any) {    
+  getHome(@GetUser() user: any) {
+
+    const cafeList = [];
     
+    if (user) {
+
+    }
+
     // main.ts에서 기본값을 'layouts/main-layout'으로 주었기 때문에, 
     // 아무것도 안 넘겨도 자동으로 main-layout이 씌워집니다.
-    return { 
+    return {
       title: '카페 홈',
       isLogin: (!!user),
-      user: user, 
+      user: user,
       cafeList: [
         {
           name: "오랑's Essay in Atlanta",
@@ -74,47 +83,47 @@ export class AppController {
           ]
         }
       ]
-     }; 
+    };
   }
 
   // 2. 회원가입 화면 (auth 레이아웃 덮어쓰기)
   @Get('/signup')
   @Render('pages/signup') // views/pages/signup.hbs의 내용을 가져옴
   getSignup() {
-    return { 
+    return {
       // ⭐ 이 화면만 기본 레이아웃을 무시하고 signup-layout을 씌우라고 명령!
-      layout: 'layouts/signup-layout', 
-      title: '회원가입' 
+      layout: 'layouts/signup-layout',
+      title: '회원가입'
     };
   }
 
   @Get('/login')
   @Render('pages/login')
-  getLogin() {    
-    return {       
-      layout: 'layouts/login-layout', 
+  getLogin() {
+    return {
+      layout: 'layouts/login-layout',
       title: '로그인'
-     }; 
+    };
   }
 
   @UseGuards(SsrOptionalAuthGuard)
-  @Get('/cafe/create')
+  @Get('/create')
   @Render('pages/home_create')
-  getCafeCreate(@GetUser() user: any) {    
-    return { 
-      user: user, 
+  getCafeCreate(@GetUser() user: any) {
+    return {
+      user: user,
       title: '카페 만들기'
-     }; 
+    };
   }
 
   @UseGuards(SsrOptionalAuthGuard)
   @Get('/cafe/:address')
   @Render('pages/cafe-home')
   async getCafeHome(
-    @GetUser() user: any, 
+    @GetUser() user: any,
     @Param('address') address: string,
     @Res() res: Response
-  ) {    
+  ) {
 
     const cafe = await this.cafeService.getCafeByAddress(address);
 
@@ -123,25 +132,31 @@ export class AppController {
       return res.redirect('/home');
     }
 
-    // const recentPosts = await this.cafePostService.getRecentPosts(cafe.id);
+    const [member, posts] = await Promise.all([
+      user ? this.cafeService.getMember(user.id) : null,
+      Promise.resolve([]), // 나중에 주석 해제: this.cafePostService.getPostList(cafe.id, 0, 1)
+    ]);
 
-    return {       
-      layout: 'layouts/cafe-layout', 
+    return {
+      layout: 'layouts/cafe-layout',
       showSidebar: true,
       title: cafe.name,
       user,
-      cafe
-     }; 
+      cafe,
+      posts,
+      isMember: (!!member),
+      member
+    };
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/cafe/:address/post/new')
   @Render('pages/cafe-post-create')
   async getCafePostCreate(
-    @GetUser() user: any, 
+    @GetUser() user: any,
     @Param('address') address: string,
     @Res() res: Response
-  ) {    
+  ) {
 
     const cafe = await this.cafeService.getCafeByAddress(address);
 
@@ -150,24 +165,62 @@ export class AppController {
       return res.redirect('/home');
     }
 
-    return {       
-      layout: 'layouts/cafe-layout', 
+    return {
+      layout: 'layouts/cafe-layout',
       showSidebar: false,
       title: '글쓰기',
       user,
       cafe
-     }; 
+    };
   }
 
   @UseGuards(SsrOptionalAuthGuard)
   @Get('/cafe/:address/post/:postId')
   @Render('pages/cafe-post-detail')
   async getCafePostDetail(
-    @GetUser() user: any, 
+    @GetUser() user: any,
     @Param('address') address: string,
     @Param('postId') postId: string,
     @Res() res: Response
-  ) {    
+  ) {
+
+    // 서로 의존성이 없는 데이터는 Promise.all로 병렬 조회
+    const [cafe, post] = await Promise.all([
+      this.cafeService.getCafeByAddress(address),
+      this.cafePostService.getPost(postId),
+    ]);
+
+    // 필수 리소스가 하나라도 없으면 빠르게 홈으로 돌려보냄 (Early Return)
+    if (!cafe || !post) {
+      return res.redirect('/home');
+    }
+
+    const author = await this.cafeService.getMember(post.userId);
+
+    // 작성자가 카페 멤버가 아닌 경우 예외 처리
+    if (!author) {
+      throw new BusinessException(ErrorCode.NOT_CAFE_MEMBER, HttpStatus.FORBIDDEN);
+    }
+    
+    return {
+      layout: 'layouts/cafe-layout',
+      showSidebar: false,
+      title: post.title,
+      user,
+      cafe,
+      post,
+      author, 
+    };
+  }
+
+  @UseGuards(SsrOptionalAuthGuard)
+  @Get('/cafe/:address/join')
+  @Render('pages/cafe-join')
+  async getCafeJoin(
+    @GetUser() user: any,
+    @Param('address') address: string,
+    @Res() res: Response
+  ) {
 
     const cafe = await this.cafeService.getCafeByAddress(address);
 
@@ -176,22 +229,12 @@ export class AppController {
       return res.redirect('/home');
     }
 
-    const post = await this.cafePostService.getPost(postId);
-
-    if (!post) {
-      return res.redirect('/home');
-    }
-
-    const member = await this.cafeService.getMember(post.userId);
-
-    return {       
-      layout: 'layouts/cafe-layout', 
-      showSidebar: false,
-      title: post.title,
+    return {
+      layout: 'layouts/cafe-layout',
+      showSidebar: true,
+      title: cafe.name,
       user,
-      cafe,
-      post,
-      author: member
-     }; 
+      cafe
+    };
   }
 }
