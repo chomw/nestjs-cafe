@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseFilters, UseInterceptors, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseFilters, UseInterceptors, UseGuards, Query, HttpStatus, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
 import { CafeService } from './cafe.service';
 import { CreateCafeDto } from './dto/create-cafe.dto';
 import { UpdateCafeDto } from './dto/update-cafe.dto';
@@ -9,6 +9,10 @@ import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { CreateCafePostDto } from './dto/create-cafe-post.dto';
 import { CafePostService } from './cafe-post.service';
 import { CreateCafeMemberDto } from './dto/create-cafe-member.dto';
+import { SsrOptionalAuthGuard } from 'src/auth/guards/ssr-optional-auth.guards';
+import { BusinessException } from 'src/common/exceptions/business.exception';
+import { ErrorCode } from 'src/common/constants/error-code.constant';
+import { PaginationDefault } from './constants/cafe.constant';
 
 @Controller('api/cafe')
 export class CafeController {
@@ -46,5 +50,23 @@ export class CafeController {
     @GetUser() user: any, 
     @Body() createCafeMemberDto: CreateCafeMemberDto) {
     return await this.cafeService.joinCafe(user.id, createCafeMemberDto);
+  }
+
+  @Get(':address/posts')
+  @UseGuards(SsrOptionalAuthGuard)
+  @UseInterceptors(TransformInterceptor)
+  @UseFilters(HttpExceptionFilter)
+  async getPostList(
+    @GetUser() user: any,
+    @Param('address') address: string,
+    @Query('page', new DefaultValuePipe(PaginationDefault.PAGE), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(PaginationDefault.LIMIT), ParseIntPipe) limit: number,
+  ) {
+    const cafe = await this.cafeService.getCafeByAddress(address);
+    if (!cafe) {
+      throw new BusinessException(ErrorCode.CAFE_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    return await this.cafePostService.getPostList(cafe.id, page, limit);
   }
 }

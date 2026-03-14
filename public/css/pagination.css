@@ -1,0 +1,47 @@
+/* 페이징 컨테이너 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    gap: 4px;
+}
+
+/* 기본 페이지 버튼 */
+.page-btn {
+    border: none;
+    background: transparent;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #555;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* 마우스 호버 효과 */
+.page-btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* 현재 페이지(Active) 색상 입히기 */
+.page-btn.active {
+    font-weight: bold;
+    background: #e5e5e5;
+    color: #222;
+    cursor: default;
+    /* 현재 페이지는 클릭 안 되는 느낌 주기 */
+}
+
+/* 이전, 다음 화살표 버튼 */
+.prev-btn,
+.next-btn {
+    border: 1px solid #e5e5e5;
+    background-color: #fff;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    background-color: #f9f9f9;
+}

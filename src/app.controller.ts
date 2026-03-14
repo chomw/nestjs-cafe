@@ -30,13 +30,36 @@ export class AppController {
   @UseGuards(SsrOptionalAuthGuard)
   @Get('/home')
   @Render('pages/home') // views/pages/home.hbs의 내용을 가져옴
-  getHome(@GetUser() user: any) {
+  async getHome(@GetUser() user: any) {
 
-    const cafeList = [];
-    
-    if (user) {
+    const cafeList = user ? await this.cafeService.getMyCafeList(user.id) : [];
+    const recommendCafeList = await this.cafeService.getRecommendCafeList();
 
-    }
+    const cafeIdSet = new Set();
+
+    // 임시 배열 생성 없이 바로 Set에 ID만 쏙쏙 집어넣기
+    for (const cafe of cafeList) cafeIdSet.add(cafe.cafeId);
+    for (const cafe of recommendCafeList) cafeIdSet.add(cafe.cafeId);
+
+    const cafeIds = Array.from(cafeIdSet) as number[];
+
+    const postMap = cafeIds.length > 0 ? await this.cafePostService.getLatestPostsByCafeIds(cafeIds) : new Map();
+
+    cafeList.forEach(cafeInfo => {
+      const posts = postMap.get(cafeInfo.cafeId);
+      cafeInfo.posts = posts;
+    });
+
+    recommendCafeList.forEach(cafeInfo => {
+      const posts = postMap.get(cafeInfo.cafeId);
+      cafeInfo.posts = posts;
+    });
+
+    const defaultTab = (cafeList.length <= 0 ? 'popular' : 'my');
+    const isMyCafeActive = defaultTab === 'my';
+    const isPopularActive = defaultTab === 'popular';
+
+    this.logger.log('recommendCafeList: ' + JSON.stringify(recommendCafeList));
 
     // main.ts에서 기본값을 'layouts/main-layout'으로 주었기 때문에, 
     // 아무것도 안 넘겨도 자동으로 main-layout이 씌워집니다.
@@ -44,45 +67,10 @@ export class AppController {
       title: '카페 홈',
       isLogin: (!!user),
       user: user,
-      cafeList: [
-        {
-          name: "오랑's Essay in Atlanta",
-          posts: [
-            { postId: 1, title: '(260211)외환 시장, 극단의 동상이몽!', author: '오랑', date: '2026.02.11.' },
-            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
-            { postId: 1, title: '맨 앞에 서지 않는 법 - AI 시대', author: '게임개발자', date: '22시간 전' },
-          ]
-        },
-        {
-          name: "온라인서버제작자모임",
-          posts: [
-            { postId: 1, title: '맨 앞에 서지 않는 법 - AI 시대', author: '게임개발자', date: '22시간 전' },
-            { postId: 1, title: '운영 피로도 없이 굴러가는 수익', author: '게임개발자', date: '2026.02.10.' },
-          ]
-        },
-        {
-          name: "오랑's Essay in Atlanta",
-          posts: [
-            { postId: 1, title: '(260211)외환 시장, 극단의 동상이몽!', author: '오랑', date: '2026.02.11.' },
-            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
-          ]
-        },
-        {
-          name: "온라인서버제작자모임",
-          posts: [
-            { postId: 1, title: '맨 앞에 서지 않는 법 - AI 시대', author: '게임개발자', date: '22시간 전' },
-            { postId: 1, title: '운영 피로도 없이 굴러가는 수익', author: '게임개발자', date: '2026.02.10.' },
-          ]
-        },
-        {
-          name: "오랑's Essay in Atlanta",
-          posts: [
-            { postId: 1, itle: '(260211)외환 시장, 극단의 동상이몽!', author: '오랑', date: '2026.02.11.' },
-            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
-            { postId: 1, title: '(260210)엔 약세... 우주 방어!', author: '오랑', date: '2026.02.10.' },
-          ]
-        }
-      ]
+      cafeList,
+      recommendCafeList,
+      isMyCafeActive,
+      isPopularActive
     };
   }
 
@@ -132,9 +120,9 @@ export class AppController {
       return res.redirect('/home');
     }
 
-    const [member, posts] = await Promise.all([
+    const [member, postData] = await Promise.all([
       user ? this.cafeService.getMember(user.id) : null,
-      Promise.resolve([]), // 나중에 주석 해제: this.cafePostService.getPostList(cafe.id, 0, 1)
+      this.cafePostService.getPostList(cafe.id)
     ]);
 
     return {
@@ -143,7 +131,7 @@ export class AppController {
       title: cafe.name,
       user,
       cafe,
-      posts,
+      postData,
       isMember: (!!member),
       member
     };

@@ -1,40 +1,71 @@
 <div id="home">
     <div class="tab-area">
-        <button class="tab active">내 카페</button>
-        <button class="tab">즐겨찾는 게시판</button>
+        <button class="tab {{#if isMyCafeActive}}active{{/if}}" data-target="my-cafe-container">내 카페</button>
+        <button class="tab {{#if isPopularActive}}active{{/if}}" data-target="popular-cafe-container">인기 카페</button>
     </div>
 
     <div class="cafe-feed">
-        {{#each cafeList}}
-        <div class="cafe-card">
-            <div class="cafe-header">
-                <div class="cafe-thumbnail">
-                    {{#if this.imageUrl}}
-                    <img src="{{this.imageUrl}}" alt="{{this.name}}">
-                    {{else}}                    
-                    <i class="fa-solid fa-mug-hot default-icon"></i>
-                    {{/if}}
-                </div>
-
-                <div class="cafe-title-area">
-                    <a href="/cafe/{{this.id}}" class="cafe-name">{{this.name}}</a>
-                    <span class="new-post-count">새 글 {{this.newPostCount}}</span>
-                </div>
-            </div>
-
-            <ul class="post-list">
-                {{#each this.posts}}
-                <li>
-                    <a href="/post/{{this.postId}}" class="post-title">{{this.title}}</a>
-                    <div class="post-meta">
-                        <span class="author">{{this.author}}</span>
-                        <span class="dot">·</span>
-                        <span class="date">{{this.date}}</span>
+        <div id="my-cafe-container" class="tab-content" style="display: {{#if isMyCafeActive}}block{{else}}none{{/if}};">
+            {{#each cafeList as |cafe|}}
+            <div class="cafe-card">
+                <div class="cafe-header">
+                    <div class="cafe-thumbnail">
+                        {{#if cafe.cafeIconImg}}
+                        <img src="{{cafe.cafeIconImg}}" alt="{{cafe.cafeName}}">
+                        {{else}}                    
+                        <i class="fa-solid fa-mug-hot default-icon"></i>
+                        {{/if}}
                     </div>
-                </li>
-                {{/each}}
-            </ul>
+                    <div class="cafe-title-area">
+                        <a href="/cafe/{{cafe.cafeAddress}}" class="cafe-name">{{cafe.cafeName}}</a>
+                    </div>
+                </div>
+                <ul class="post-list">
+                    {{#each cafe.posts as |post|}}
+                    <li>
+                        <a href="/cafe/{{cafe.cafeAddress}}/post/{{post.id}}" class="post-title">{{post.title}}</a>
+                        <div class="post-meta">
+                            <span class="author">{{post.authorNickname}}</span>
+                            <span class="dot">·</span>
+                            <span class="date">{{formatDateOnly post.createdAt}}</span>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/each}}
         </div>
-        {{/each}}
+
+        <div id="popular-cafe-container" class="tab-content" style="display: {{#if isPopularActive}}block{{else}}none{{/if}};">
+            {{#each recommendCafeList as |cafe|}}
+            <div class="cafe-card">
+                <div class="cafe-header">
+                    <div class="cafe-thumbnail">
+                        {{#if cafe.cafeIconImg}}
+                        <img src="{{cafe.cafeIconImg}}" alt="{{cafe.cafeName}}">
+                        {{else}}                    
+                        <i class="fa-solid fa-mug-hot default-icon"></i>
+                        {{/if}}
+                    </div>
+                    <div class="cafe-title-area">
+                        <a href="/cafe/{{cafe.cafeAddress}}" class="cafe-name">{{cafe.cafeName}}</a>
+                    </div>
+                </div>
+                <ul class="post-list">
+                    {{#each cafe.posts as |post|}}
+                    <li>
+                        <a href="/cafe/{{cafe.cafeAddress}}/post/{{post.id}}" class="post-title">{{post.title}}</a>
+                        <div class="post-meta">
+                            <span class="author">{{post.authorNickname}}</span>
+                            <span class="dot">·</span>
+                            <span class="date">{{formatDateOnly post.createdAt}}</span>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/each}}
+        </div>
     </div>
 </div>
+<script src="/js/home.js"></script>

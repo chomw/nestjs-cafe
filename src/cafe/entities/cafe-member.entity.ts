@@ -6,13 +6,14 @@ import {
     Index,
     Unique
 } from 'typeorm';
-import { CafeMemberStatus, CafeMemberLevel } from '../constants/cafe-member.constant';
+import { CafeMemberStatus, CafeMemberLevel } from '../constants/cafe.constant';
 
 @Entity({ name: 'cafe_member' })
 @Unique('uk_cafe_user', ['cafeId', 'userId'])
 @Unique('uk_cafe_nickname', ['cafeId', 'nickname'])
 @Index('idx_cafe_status_visit', ['cafeId', 'status', 'lastVisitDate'])
 @Index('idx_cafe_status_join', ['cafeId', 'status', 'joinDate'])
+@Index('idx_user_status_visit', ['userId', 'status', 'lastVisitDate'])
 export class CafeMember {
 
     @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true, comment: 'PK' })

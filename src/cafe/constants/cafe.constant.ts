@@ -18,3 +18,20 @@ export enum CafeMemberLevel {
   ASSOCIATE = 1,    // 준회원
   WAITING = 0,      // 가입 대기
 }
+
+/**
+ * 카페 게시판 페이징 기본값
+ */
+export const PaginationDefault = {
+    PAGE: 1,
+    LIMIT: 10,
+} as const;
+
+/**
+ * 카페 공개 상태
+ */
+export enum CafePublicType {
+  PUBLIC = 0,   // 공개
+  PRIVATE = 1,  // 비공개
+  APPROVAL = 2, // 초대승인 (가입 승인 필요)
+};

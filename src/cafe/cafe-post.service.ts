@@ -7,6 +7,7 @@ import { CreateCafePostDto } from "./dto/create-cafe-post.dto";
 import { BusinessException } from "src/common/exceptions/business.exception";
 import { ErrorCode } from "src/common/constants/error-code.constant";
 import { CafeMember } from "./entities/cafe-member.entity";
+import { PaginationDefault } from "./constants/cafe.constant";
 
 
 @Injectable()
@@ -54,7 +55,111 @@ export class CafePostService {
         return post;
     }
 
-    async getPostList(cafe, page, count) {
+    /**
+     * 게시글 목록 조회
+     * 
+     * (1) findAndCount
+     * findAndCount를 쓰면 내부적으로 SELECT * ... LIMIT 쿼리와 SELECT COUNT(*) ... 쿼리를 TypeORM이 알아서 병렬로 날려 준다.
+     * 
+     * (2) 자동 Soft Delete 필터링
+     * 엔티티에 @DeleteDateColumn을 설정했기 때문에, 위 쿼리에는 명시하지 않았지만 TypeORM이 몰래 WHERE deleted_at IS NULL 조건을 자동으로 붙여서 쿼리를 날려 준다.
+     * 따라서 삭제된 컬럼은 표시되지 않는다.
+     * 
+     * 
+     * @param cafeId 
+     * @param page 
+     * @param limit 
+     */
+    async getPostList(cafeId: number, page: number = PaginationDefault.PAGE, limit: number = PaginationDefault.LIMIT) {
+        const take = limit;
+        const skip = (page - 1) * limit;
 
+        const [posts, total] = await this.cafePostRepository.findAndCount({
+            where: { cafeId },
+            order: { createdAt: 'DESC' },
+            skip,
+            take
+        });
+
+        if (posts.length === 0) {
+            return { posts: [], totalElements: 0, currentPage: page, totalPages: 0 };
+        }
+
+        const userIds = [...new Set(posts.map(post => post.userId))];
+
+        const members = await this.cafeService.getMemberList(cafeId, userIds);
+
+        const memberMap = new Map(members.map(member => [member.userId, member]));
+
+        const mappedPosts = posts.map(post => {
+            const author = memberMap.get(post.userId);
+            return {
+                ...post,
+                nickname: author ? author.nickname : null,
+                profile_img: author ? author.profile_img : null
+            };
+        });
+
+        return {
+            posts: mappedPosts,
+            totalPosts: total,
+            currentPage: page,
+            totalPages: Math.ceil(total / take),
+        };
+    }
+
+    /**
+     * 여러 카페의 최신 게시글을 각각 3개씩 병렬로 조회
+     * 
+     * 다음과 같은 쿼리를 TypeORM의 createQueryBuilder(), leftJoin()을 이용해서 구현.
+     * 쿼리:
+     * SELECT 
+     *      post.*, `member`.nickname, `member`.profile_img 
+     * FROM cafe_post AS post 
+     *      LEFT JOIN cafe_member AS `member` 
+     *      ON post.user_id = `member`.user_id AND post.cafe_id = `member`.cafe_id 
+     * WHERE post.cafe_id = 7 ORDER BY post.created_at DESC LIMIT 3;
+     * 
+     * 
+     * @param cafeIds   조회할 카페 ID 배열
+     * @returns         cafeId를 키로 하고, 최신 게시글 배열을 값으로 가지는 Map 객체
+     */
+    async getLatestPostsByCafeIds(cafeIds: number[]) {
+        // 가입한 카페가 없으면 빈 Map 반환
+        if (!cafeIds || cafeIds.length === 0) {
+            return new Map();
+        }
+
+        // 1. 각 카페별로 최신글 3개씩 가져오는 쿼리(Promise)들을 생성
+        const fetchPromises = cafeIds.map(cafeId => {
+            return this.cafePostRepository.createQueryBuilder('post')
+                // 조건 1: 작성자 ID가 같아야 함 / 조건 2: 같은 카페의 멤버 정보여야 함
+                .leftJoin(
+                    'cafe_member',
+                    'member',
+                    'post.user_id = member.user_id AND post.cafe_id = member.cafe_id'
+                )
+                .select([
+                    'post.id AS id',
+                    'post.title AS title',
+                    'post.created_at AS createdAt',
+                    'member.nickname AS author',
+                ])
+                .where('post.cafe_id = :cafeId', { cafeId })
+                .orderBy('post.created_at', 'DESC')
+                .limit(3) 
+                .getRawMany(); // 엔티티가 아닌 순수 데이터(Raw) 객체 배열로 반환
+        });
+
+        // 2. Promise.all로 여러 쿼리를 동시에(병렬) 데이터베이스에 요청!
+        const results = await Promise.all(fetchPromises);
+
+        // 3. 컨트롤러나 서비스에서 매핑하기 편하도록 Map 구조로 변환
+        const postMap = new Map();
+        cafeIds.forEach((cafeId, index) => {
+            postMap.set(cafeId, results[index]);
+        });
+
+        return postMap;
     }
 }
