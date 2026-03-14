@@ -51,7 +51,7 @@ export class SsrOptionalAuthGuard extends AuthGuard('jwt') {
             const decoded = await this.jwtService.verifyAsync(refreshToken, { secret });
 
             // 리프레시 토큰의 페이로드를 바탕으로 임시 유저 객체 생성
-            const user = { sub: decoded.sub, login_id: decoded.login_id, nickname: decoded.nickname, profile_img: decoded.profile_img };
+            const user = { id: decoded.id, login_id: decoded.login_id, nickname: decoded.nickname, profile_img: decoded.profile_img };
 
             const tokens = await this.authService.refreshTokens(user, refreshToken);
 

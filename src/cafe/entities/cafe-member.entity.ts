@@ -6,25 +6,30 @@ import {
     Index,
     Unique
 } from 'typeorm';
-import { CafeMemberStatus, CafeMemberLevel } from '../constants/cafe-member.constant';
+import { CafeMemberStatus, CafeMemberLevel } from '../constants/cafe.constant';
 
 @Entity({ name: 'cafe_member' })
 @Unique('uk_cafe_user', ['cafeId', 'userId'])
+@Unique('uk_cafe_nickname', ['cafeId', 'nickname'])
 @Index('idx_cafe_status_visit', ['cafeId', 'status', 'lastVisitDate'])
 @Index('idx_cafe_status_join', ['cafeId', 'status', 'joinDate'])
+@Index('idx_user_status_visit', ['userId', 'status', 'lastVisitDate'])
 export class CafeMember {
 
     @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true, comment: 'PK' })
     id: string;
 
     @Column({ name: 'cafe_id', type: 'int', unsigned: true, comment: '카페 ID' })
-    cafeId: string;
+    cafeId: number;
 
     @Column({ name: 'user_id', type: 'bigint', unsigned: true, comment: '유저 ID' })
     userId: string;
 
     @Column({ name: 'nickname', length: 20, comment: '카페별 닉네임' })
     nickname: string;
+
+    @Column({ type: 'varchar', length: 255, nullable: true, comment: '프로필 이미지 URL' })
+    profile_img: string | null;
 
     @Column({
         type: 'tinyint',

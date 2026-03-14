@@ -1,0 +1,87 @@
+.cafe-sidebar {
+    width: 210px;
+    flex-shrink: 0;
+}
+
+.sidebar-box {
+    border: 1px solid #e5e5e5;
+    margin-bottom: 12px;
+    padding: 15px;
+    background: #fff;
+}
+
+/* 탭 스타일 */
+.info-tabs {
+    display: flex;
+    border-bottom: 1px solid #e5e5e5;
+    margin: -15px -15px 15px -15px;
+}
+.info-tabs button {
+    flex: 1;
+    border: none;
+    background: #f8f9fa;
+    padding: 12px 0;
+    cursor: pointer;
+    font-size: 13px;
+}
+.info-tabs button.active {
+    background: #fff;
+    font-weight: bold;
+    border-bottom: 2px solid #222;
+}
+
+/* 매니저 정보 */
+.manager-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.profile-thumb {
+    width: 40px; height: 40px; background: #e4e6eb; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; margin-right: 10px;
+}
+.profile-details { font-size: 12px; }
+.profile-details .badge { color: #999; font-size: 11px; border: 1px solid #eee; padding: 1px 4px; }
+.profile-details p { color: #888; margin-top: 4px; }
+
+/* 통계 및 버튼 */
+.cafe-stats { list-style: none; padding: 0; font-size: 12px; color: #555; margin-bottom: 15px; }
+.cafe-stats li { margin-bottom: 6px; display: flex; align-items: center; }
+.cafe-stats i { width: 20px; }
+.invite-btn { margin-left: auto; color: #888; text-decoration: none; }
+
+.write-post-btn, .chat-btn {
+    width: 100%; padding: 10px; border: 1px solid #ccc; background: #fff; cursor: pointer; margin-bottom: 5px; font-size: 13px;
+    display: block;             /* 버튼처럼 가로를 꽉 채우게 만듦 */
+    text-align: center;         /* 글자를 가운데 정렬 */
+    text-decoration: none;      /* 링크 밑줄 제거 */
+    box-sizing: border-box;     /* 패딩 때문에 너비가 삐져나가지 않도록 */
+}
+
+.write-post-btn { 
+    background: var(--vscode-blue); 
+    color: #fff; 
+    border: none; 
+    transition: background-color 0.2s ease; /* ✨ 색상이 부드럽게 변하도록 애니메이션 효과 추가 */
+}
+
+.write-post-btn:hover { 
+    background: var(--vscode-blue-hover, #006ab1); /* 변수가 선언되어 있지 않을 경우를 대비해 기본값(#006ab1) 세팅 */
+}
+
+/* 멤버 소식 / 랭킹 */
+.sidebar-box h4 { font-size: 13px; margin-bottom: 10px; }
+.sub-tabs { font-size: 12px; color: #888; margin-bottom: 10px; }
+.sub-tabs .active { color: #f4361e; font-weight: bold; }
+.sub-tabs .divider { margin: 0 4px; color: #ddd; }
+.member-news ul, .member-ranking ol { list-style: none; padding: 0; font-size: 12px; color: #444; }
+.member-news li, .member-ranking li { margin-bottom: 8px; }
+
+/* 시계 위젯 */
+.clock-widget { display: flex; justify-content: center; align-items: center; padding: 20px 0; }
+.clock-widget .ampm { font-size: 12px; font-weight: bold; border: 1px solid #ccc; padding: 2px 4px; margin-right: 10px; }
+.clock-widget .time { font-size: 28px; letter-spacing: 1px; }
+
+/* 탈퇴 버튼 */
+.sidebar-footer { padding: 10px; text-align: left; background: #f9f9f9; border: 1px solid #e5e5e5; border-top: none; margin-top: -12px; }
+.leave-cafe { font-size: 12px; color: #888; text-decoration: none; }
