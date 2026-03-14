@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CafePost } from "./entities/cafe-post.entity";
 import { Repository } from "typeorm";
@@ -34,5 +34,23 @@ export class CafePostService {
         });
 
         return await this.cafePostRepository.save(newPost);
+    }
+
+    /**
+     * 게시글 단건 조회
+     * 
+     * @param postId 게시글 ID
+     * @returns 게시글 객체(CafePost)
+     */
+    async getPost(postId: string): Promise<CafePost> {
+        const post = await this.cafePostRepository.findOneBy({
+            id: postId
+        });
+
+        if (!post) {
+            throw new BusinessException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        return post;
     }
 }

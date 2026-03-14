@@ -5,6 +5,7 @@ import { SsrOptionalAuthGuard } from './auth/guards/ssr-optional-auth.guards';
 import { CafeService } from './cafe/cafe.service';
 import type { Response } from 'express';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { CafePostService } from './cafe/cafe-post.service';
 
 @Controller()
 export class AppController {
@@ -13,6 +14,7 @@ export class AppController {
   constructor(
     private readonly appService: AppService, 
     private readonly cafeService: CafeService,
+    private readonly cafePostService: CafePostService,
   ) { }
 
   @Get()
@@ -157,13 +159,13 @@ export class AppController {
      }; 
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(SsrOptionalAuthGuard)
   @Get('/cafe/:address/post/:postId')
   @Render('pages/cafe-post-detail')
   async getCafePostDetail(
     @GetUser() user: any, 
     @Param('address') address: string,
-    @Param('postId') postId: number,
+    @Param('postId') postId: string,
     @Res() res: Response
   ) {    
 
@@ -174,12 +176,22 @@ export class AppController {
       return res.redirect('/home');
     }
 
+    const post = await this.cafePostService.getPost(postId);
+
+    if (!post) {
+      return res.redirect('/home');
+    }
+
+    const member = await this.cafeService.getMember(post.userId);
+
     return {       
       layout: 'layouts/cafe-layout', 
       showSidebar: false,
-      title: '글쓰기',
+      title: post.title,
       user,
-      cafe
+      cafe,
+      post,
+      author: member
      }; 
   }
 }

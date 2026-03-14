@@ -18,4 +18,6 @@ export const ErrorMessageMap: Record<ErrorCode, string> = {
   [ErrorCode.BANNED_MEMBER]               : '해당 카페에서 강제 탈퇴되었습니다.',    
   [ErrorCode.NOT_CAFE_MEMBER]             : '카페에 가입한 멤버만 글을 작성할 수 있습니다.',
   [ErrorCode.INVALID_MEMBER_STATUS]       : '현재 글을 작성할 수 있는 상태가 아닙니다.',
+
+  [ErrorCode.POST_NOT_FOUND]              : '존재하지 않거나 삭제된 게시글입니다.',
 };

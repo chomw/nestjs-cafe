@@ -12,6 +12,6 @@ import { CafePostService } from './cafe-post.service';
   imports: [TypeOrmModule.forFeature([Cafe, CafeMember, CafePost])], 
   controllers: [CafeController],
   providers: [CafeService, CafePostService],
-  exports: [CafeService]
+  exports: [CafeService, CafePostService]
 })
 export class CafeModule {}

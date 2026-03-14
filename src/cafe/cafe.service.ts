@@ -105,4 +105,22 @@ export class CafeService {
 
     return member;
   }
+
+  /**
+   * 유저 아이디로 특정 카페 회원 단건 조회
+   * 
+   * @param userId 유저 아이디
+   * @returns 
+   */
+  async getMember(userId: string): Promise<CafeMember> {
+    const member = await this.cafeMemberRepository.findOne({
+      where: { userId },
+    });
+
+    if (!member) {
+      throw new BusinessException(ErrorCode.NOT_CAFE_MEMBER, HttpStatus.FORBIDDEN);
+    }
+
+    return member;
+  }
 }

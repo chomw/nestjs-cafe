@@ -26,6 +26,9 @@ export class CafeMember {
     @Column({ name: 'nickname', length: 20, comment: '카페별 닉네임' })
     nickname: string;
 
+    @Column({ type: 'varchar', length: 255, nullable: true, comment: '프로필 이미지 URL' })
+    profile_img: string | null;
+
     @Column({
         type: 'tinyint',
         unsigned: true,

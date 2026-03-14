@@ -24,7 +24,7 @@
         gap: 8px;
     }
 
- 
+
     /* 1. 일반 버튼 (수정, 삭제, 다음글, 목록, 답글, TOP) */
     .btn-normal {
         background-color: #ffffff;
@@ -92,12 +92,7 @@
         gap: 10px;
     }
 
-    .profile-img {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background-color: #e2e2e2;
-    }
+
 
     .meta-info {
         display: flex;
@@ -137,13 +132,6 @@
         font-size: 13px;
         color: #222;
         text-decoration: none;
-    }
-
-    .profile-img-small {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background-color: #e2e2e2;
     }
 
     /* 통계 (좋아요, 댓글 수) */
@@ -251,5 +239,36 @@
     .write-action {
         display: flex;
         justify-content: flex-end;
+    }
+
+    /* =========================================
+                공통 아바타 컴포넌트
+    ========================================= */
+    .avatar-wrap {
+        position: relative;
+        flex-shrink: 0;
+        /* width와 height는 아래 크기별 클래스에서 결정합니다 */
+    }
+
+    /* 크기 베리에이션 (Modifier) */
+    .avatar-wrap.size-m {
+        width: 36px;
+        height: 36px;
+    }
+
+    .avatar-wrap.size-s {
+        width: 24px;
+        height: 24px;
+    }
+
+    .avatar-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        /* 완전한 원형 */
+        object-fit: cover;
+        /* 찌그러짐 방지 */
+        background-color: #f2f2f2;
+        border: 1px solid #e5e7ea;
     }
 }
