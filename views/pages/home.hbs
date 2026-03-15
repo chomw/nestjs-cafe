@@ -27,7 +27,7 @@
                         <div class="post-meta">
                             <span class="author">{{post.authorNickname}}</span>
                             <span class="dot">·</span>
-                            <span class="date">{{formatDateOnly post.createdAt}}</span>
+                            <span class="date local-date" data-utc="{{toISOString post.createdAt}}"></span>
                         </div>
                     </li>
                     {{/each}}
@@ -58,7 +58,7 @@
                         <div class="post-meta">
                             <span class="author">{{post.authorNickname}}</span>
                             <span class="dot">·</span>
-                            <span class="date">{{formatDateOnly post.createdAt}}</span>
+                            <span class="date local-date" data-utc="{{toISOString post.createdAt}}"></span>
                         </div>
                     </li>
                     {{/each}}
@@ -68,4 +68,5 @@
         </div>
     </div>
 </div>
+<script src="/js/utils/date-format.js"></script>
 <script src="/js/home.js"></script>
