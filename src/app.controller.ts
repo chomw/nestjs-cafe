@@ -121,7 +121,7 @@ export class AppController {
     }
 
     const [member, postData] = await Promise.all([
-      user ? this.cafeService.getMember(user.id) : null,
+      user ? this.cafeService.getMember(cafe.id, user.id) : null,
       this.cafePostService.getPostList(cafe.id)
     ]);
 
@@ -183,7 +183,7 @@ export class AppController {
       return res.redirect('/home');
     }
 
-    const author = await this.cafeService.getMember(post.userId);
+    const author = await this.cafeService.getMember(cafe.id, post.userId);
 
     // 작성자가 카페 멤버가 아닌 경우 예외 처리
     if (!author) {

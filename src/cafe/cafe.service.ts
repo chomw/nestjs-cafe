@@ -116,12 +116,13 @@ export class CafeService {
   /**
    * 유저 아이디로 특정 카페 회원 단건 조회
    * 
-   * @param userId 유저 아이디
+   * @param cafeId 
+   * @param userId 
    * @returns 
    */
-  async getMember(userId: string): Promise<CafeMember | null> {
+  async getMember(cafeId: number, userId: string): Promise<CafeMember | null> {
     const member = await this.cafeMemberRepository.findOne({
-      where: { userId },
+      where: { cafeId, userId },
     });
 
     return member;
