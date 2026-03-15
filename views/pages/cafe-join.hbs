@@ -1,5 +1,5 @@
 <div id="cafe-join">
-    <div class="cafe-join-wrap">
+    <form class="cafe-join-wrap">
         <div class="join-header">
             <h1 class="page-title">카페 가입하기</h1>
             <p class="page-subtitle">카페 가입을 위한 정보를 입력해주세요.</p>
@@ -19,9 +19,8 @@
 
                 <div class="row-content flex-row">
                     <div class="icon-preview-box">
-                        <i class="fa-solid fa-user default-icon"></i>
+                        <i class="fa-solid fa-user default-icon" id="default_profile_icon"></i>
 
-                        {{!-- TODO: 이미지 업로드 기능 개발 후 미리보기 기능 추가할 것 --}}
                         <img src="" alt="프로필 미리보기" id="profile_preview_img" class="profile-img-preview"
                             style="display: none;">
 
@@ -34,6 +33,8 @@
                     <div class="icon-desc">
                         프로필은 카페별로 설정할 수 있습니다.<br>
                         <span style="color: #999; font-size: 12px;">(선택 사항입니다)</span>
+
+                        <div id="file_name_display" class="file-name-text"></div>
                     </div>
 
                     <input type="file" id="profile_img" name="profile_img" style="display: none;" accept="image/*">
@@ -44,7 +45,7 @@
                 <div class="row-label">별명</div>
                 <div class="row-content nickname-section">
                     <div class="input-wrap">
-                        <input type="text" class="nickname-input" value="{{user.nickname}}" placeholder="별명을 입력해주세요">
+                        <input type="text" id="nickname-input" class="nickname-input" value="{{user.nickname}}" placeholder="별명을 입력해주세요">
                         <button type="button" class="btn-clear" aria-label="지우기">&times;</button>
                     </div>
                     {{!-- <div class="nickname-status">
@@ -65,9 +66,11 @@
 
         </div>
         <div class="submit-section">
-            <button type="button" class="btn-submit" data-cafe-id="{{cafe.id}}" data-address="{{cafe.address}}">동의 후 가입하기</button>
+            <button type="button" class="btn-submit" data-cafe-id="{{cafe.id}}" data-address="{{cafe.address}}">동의 후
+                가입하기</button>
         </div>
 
-    </div>
+    </form>
 </div>
+<script src="/js/utils/image-uploader.js"></script>
 <script src="/js/cafe-join.js"></script>

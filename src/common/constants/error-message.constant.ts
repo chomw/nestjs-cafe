@@ -9,7 +9,8 @@ export const ErrorMessageMap: Record<ErrorCode, string> = {
   [ErrorCode.INVALID_PASSWORD]            : '비밀번호가 일치하지 않습니다.',
   [ErrorCode.TOKEN_EXPIRED]               : '만료된 토큰입니다.',
   [ErrorCode.INVALID_TOKEN]               : '유효하지 않은 토큰입니다.',
-
+  [ErrorCode.FILE_NOT_PROVIDED]           : '업로드된 파일이 없습니다.',
+  
   [ErrorCode.USER_ALREADY_EXISTS]         : '이미 사용중인 유저 아이디입니다.',
 
   [ErrorCode.CAFE_ALREADY_EXISTS]         : '이미 사용중인 카페 주소입니다',

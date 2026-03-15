@@ -6,6 +6,7 @@ export enum ErrorCode {
     INVALID_PASSWORD                = 10005,
     TOKEN_EXPIRED                   = 10006,
     INVALID_TOKEN                   = 10007,    
+    FILE_NOT_PROVIDED               = 10008,
 
     USER_ALREADY_EXISTS             = 20001,
 

@@ -2,14 +2,15 @@
     <h2>회원가입</h2>
     <hr class="divider">
     <form id="signup_form" action="/api/user/signup" method="POST">
-        
+
         <div class="form-item">
             <div class="label-area">
                 <span class="label-text">아이디</span>
                 <span class="required">*</span>
             </div>
             <div class="input-area">
-                <input type="text" id="login_id" name="login_id" class="custom-input" placeholder="아이디를 입력해주세요" maxlength="20" required>
+                <input type="text" id="login_id" name="login_id" class="custom-input" pattern="[a-zA-Z0-9]+" title="영문 대소문자와 숫자만 입력 가능합니다." placeholder="아이디를 입력해주세요"
+                    maxlength="20" required>
             </div>
         </div>
 
@@ -19,7 +20,8 @@
                 <span class="required">*</span>
             </div>
             <div class="input-area">
-                <input type="password" id="password" name="password" class="custom-input" placeholder="비밀번호를 입력해주세요 (최소 8자 이상)" minlength="8" maxlength="255" required>
+                <input type="password" id="password" name="password" class="custom-input"
+                    placeholder="비밀번호를 입력해주세요 (최소 8자 이상)" minlength="8" maxlength="255" required>
             </div>
         </div>
 
@@ -29,7 +31,8 @@
                 <span class="required">*</span>
             </div>
             <div class="input-area">
-                <input type="email" id="email" name="email" class="custom-input" placeholder="예) example@naver.com" maxlength="255" required>
+                <input type="email" id="email" name="email" class="custom-input" placeholder="예) example@naver.com"
+                    maxlength="255" required>
             </div>
         </div>
 
@@ -39,7 +42,8 @@
                 <span class="required">*</span>
             </div>
             <div class="input-area">
-                <input type="text" id="name" name="name" class="custom-input" placeholder="이름을 입력해주세요" maxlength="50" required>
+                <input type="text" id="name" name="name" class="custom-input" pattern="^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]+$" title="특수문자와 띄어쓰기는 사용할 수 없습니다." placeholder="이름을 입력해주세요" maxlength="50"
+                    required>
             </div>
         </div>
 
@@ -49,17 +53,21 @@
                 <span class="required">*</span>
             </div>
             <div class="input-area">
-                <input type="text" id="nickname" name="nickname" class="custom-input" placeholder="활동할 닉네임을 입력해주세요" maxlength="30" required>
+                <input type="text" id="nickname" name="nickname" class="custom-input" pattern="^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]+$" title="특수문자와 띄어쓰기는 사용할 수 없습니다." placeholder="활동할 닉네임을 입력해주세요"
+                    maxlength="30" required>
             </div>
         </div>
 
         <div class="form-item border-top">
             <div class="label-area">
                 <span class="label-text">프로필 이미지</span>
-                </div>
+            </div>
             <div class="input-area flex-row">
                 <div class="icon-preview-box">
-                    <i class="fa-solid fa-user default-icon"></i>
+                    <i class="fa-solid fa-user default-icon" id="default_icon"></i>
+
+                    <img id="image_preview" src="" alt="프로필 미리보기" style="display: none;">
+
                     <button type="button" class="camera-btn" onclick="document.getElementById('profile_img').click()">
                         <i class="fa-solid fa-camera"></i>
                     </button>
@@ -67,7 +75,10 @@
                 <div class="icon-desc">
                     서비스에서 사용할 프로필 이미지를 등록해주세요.<br>
                     (선택 사항입니다)
+
+                    <div id="file_name_display" class="file-name-text"></div>
                 </div>
+
                 <input type="file" id="profile_img" name="profile_img" style="display: none;" accept="image/*">
             </div>
         </div>
@@ -86,7 +97,8 @@
                 <span class="label-text">전화번호</span>
             </div>
             <div class="input-area">
-                <input type="tel" id="phone_num" name="phone_num" class="custom-input" placeholder="예) 010-1234-5678" maxlength="20">
+                <input type="tel" id="phone_num" name="phone_num" class="custom-input" placeholder="예) 010-1234-5678"
+                    maxlength="20">
             </div>
         </div>
 
@@ -96,4 +108,5 @@
         </div>
     </form>
 </div>
+<script src="/js/utils/image-uploader.js"></script>
 <script src="/js/signup.js"></script>

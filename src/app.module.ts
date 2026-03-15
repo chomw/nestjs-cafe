@@ -9,6 +9,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './redis/redis.module';
+import { ImageUploadModule } from './image-upload/image-upload.module';
 import * as Joi from 'joi'; 
 
 @Module({
@@ -60,7 +61,8 @@ import * as Joi from 'joi';
     CafeModule,
     UserModule,
     AuthModule,
-    RedisModule
+    RedisModule,
+    ImageUploadModule
   ],
   controllers: [AppController],
   providers: [AppService],
