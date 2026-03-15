@@ -5,8 +5,12 @@
             <button>나의활동</button>
         </div>
         <div class="manager-info">
-            <div class="profile-thumb">
-                <i class="fa-solid fa-mug-hot"></i>
+            <div class="cafe-thumbnail">
+                {{#if cafe.icon_img}}
+                <img src="{{cafe.icon_img}}" alt="{{cafe.cafeName}}">
+                {{else}}
+                <i class="fa-solid fa-mug-hot default-icon"></i>
+                {{/if}}
             </div>
             <div class="profile-details">
                 <strong>매니저명</strong> <span class="badge">매니저</span>
@@ -20,13 +24,14 @@
         </ul>
 
         {{#if isMember}}
-            <a href="/cafe/{{cafe.address}}/post/new" class="write-post-btn">카페 글쓰기</a>
+        <a href="/cafe/{{cafe.address}}/post/new" class="write-post-btn">카페 글쓰기</a>
         {{else}}
-            {{#if user}}
-                <a href="/cafe/{{cafe.address}}/join" class="write-post-btn">카페 가입하기</a>
-            {{else}}
-                <a href="/login?redirect=/cafe/{{cafe.address}}" class="write-post-btn" onclick="alert('로그인이 필요한 서비스입니다.');">카페 가입하기</a>
-            {{/if}}
+        {{#if user}}
+        <a href="/cafe/{{cafe.address}}/join" class="write-post-btn">카페 가입하기</a>
+        {{else}}
+        <a href="/login?redirect=/cafe/{{cafe.address}}" class="write-post-btn" onclick="alert('로그인이 필요한 서비스입니다.');">카페
+            가입하기</a>
+        {{/if}}
         {{/if}}
 
         <button class="chat-btn">카페 채팅</button>

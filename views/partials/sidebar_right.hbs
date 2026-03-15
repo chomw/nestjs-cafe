@@ -17,6 +17,10 @@
         <a href="/create" class="create-cafe-btn">카페 만들기</a>
         {{else}}
         <a href="/login" class="create-cafe-btn">로그인</a>
+        <div class="signup-section">
+            <p class="signup-guide">계정이 없으신가요?</p>
+            <button type="button" class="btn-cancel signup-btn" onclick="location.href='/signup'">새 계정 만들기</button>
+        </div>
         {{/if}}
     </div>
 

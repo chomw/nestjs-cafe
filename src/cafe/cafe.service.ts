@@ -49,6 +49,7 @@ export class CafeService {
         level: CafeMemberLevel.MANAGER,
         status: CafeMemberStatus.ACTIVE,
         visitCount: 1,
+        profile_img: user.profile_img
       });
 
       await manager.save(newMember);

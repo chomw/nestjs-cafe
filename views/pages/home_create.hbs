@@ -10,7 +10,7 @@
             </div>
 
             <div class="input-area">
-                <input type="text" id="cafeName" class="custom-input" placeholder="카페 이름을 입력해주세요" maxlength="50">
+                <input type="text" id="cafeName" class="custom-input" pattern="^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]+$" title="특수문자와 띄어쓰기는 사용할 수 없습니다."  placeholder="카페 이름을 입력해주세요" maxlength="50">
             </div>
         </div>
         <div class="form-item border-top">
@@ -21,8 +21,9 @@
             </div>
             <div class="input-area flex-row">
                 <span class="url-prefix">https://bluishcafe.com/</span>
-                <input type="text" id="cafeAddress" class="custom-input address-input" placeholder="카페 주소를 입력해주세요" maxlength="50">
-                <button type="button" class="btn-dark">자동생성</button>
+                <input type="text" id="cafeAddress" class="custom-input address-input" pattern="[a-zA-Z0-9]+" title="영문 대소문자와 숫자만 입력 가능합니다." placeholder="카페 주소를 입력해주세요"
+                    maxlength="50">
+                <button type="button" id="btnAutoGen" class="btn-dark">자동생성</button>
             </div>
         </div>
 
@@ -32,15 +33,23 @@
             </div>
             <div class="input-area flex-row">
                 <div class="icon-preview-box">
-                    <i class="fa-solid fa-mug-hot default-icon"></i>
-                    <button type="button" class="camera-btn">
+                    <i class="fa-solid fa-mug-hot default-icon" id="default_cafe_icon"></i>
+
+                    <img id="cafe_image_preview" src="" alt="카페 아이콘 미리보기" style="display: none;">
+
+                    <button type="button" class="camera-btn" onclick="document.getElementById('cafe_icon_img').click()">
                         <i class="fa-solid fa-camera"></i>
                     </button>
                 </div>
+
                 <div class="icon-desc">
                     모바일에서 우리 카페를 표현할 카페 아이콘을 등록해주세요.<br>
                     등록하신 아이콘은 모바일 웹, 카페 앱 및 PC 카페 > 네임 카페 등에 활용됩니다.
+
+                    <div id="cafe_file_name" class="file-name-text"></div>
                 </div>
+
+                <input type="file" id="cafe_icon_img" name="cafe_icon" style="display: none;" accept="image/*">
             </div>
         </div>
 
@@ -90,7 +99,8 @@
             </div>
 
             <div class="input-area">
-                <textarea id="cafeDescription" class="custom-textarea" placeholder="카페 설명을 입력해주세요." maxlength="100"></textarea>
+                <textarea id="cafeDescription" class="custom-textarea" placeholder="카페 설명을 입력해주세요."
+                    maxlength="100"></textarea>
 
                 <div class="input-info">
                     <span class="guide-text">입력한 내용이 카페 메인, 검색결과등의 카페리스트에 반영 됩니다.</span>
@@ -107,4 +117,5 @@
         </div>
     </form>
 </div>
+<script src="/js/utils/image-uploader.js"></script>
 <script src="/js/home_create.js"></script>
