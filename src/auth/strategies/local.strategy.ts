@@ -20,7 +20,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         const user = await this.authService.validateUser(login_id, password);
 
         if (!user) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+            throw new BusinessException(ErrorCode.INVALID_PASSWORD, HttpStatus.UNAUTHORIZED);
         }
 
         // 여기서 반환된 user 객체는 Request 객체에 자동으로 할당된다. (req.user)

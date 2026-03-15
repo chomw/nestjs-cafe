@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 4. POST 요청
-            const response = await fetch('/api/cafe', {
+            const response = await window.fetchWithAuth('/api/cafe', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

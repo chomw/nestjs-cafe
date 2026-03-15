@@ -1,0 +1,84 @@
+<aside class="cafe-sidebar">
+    <div class="sidebar-box info-box">
+        <div class="info-tabs">
+            <button class="active">카페정보</button>
+            <button>나의활동</button>
+        </div>
+        <div class="manager-info">
+            <div class="profile-thumb">
+                <i class="fa-solid fa-mug-hot"></i>
+            </div>
+            <div class="profile-details">
+                <strong>매니저명</strong> <span class="badge">매니저</span>
+                <p>2026.03.13. 개설</p>
+            </div>
+        </div>
+        <ul class="cafe-stats">
+            <li><i class="fa-solid fa-seedling"></i> 새싹1단계</li>
+            <li><i class="fa-solid fa-user-group"></i> {{cafe.memberCount}} <a href="#" class="invite-btn">초대</a></li>
+            <li><i class="fa-solid fa-location-dot"></i> 대한민국</li>
+        </ul>
+
+        {{#if isMember}}
+            <a href="/cafe/{{cafe.address}}/post/new" class="write-post-btn">카페 글쓰기</a>
+        {{else}}
+            {{#if user}}
+                <a href="/cafe/{{cafe.address}}/join" class="write-post-btn">카페 가입하기</a>
+            {{else}}
+                <a href="/login?redirect=/cafe/{{cafe.address}}" class="write-post-btn" onclick="alert('로그인이 필요한 서비스입니다.');">카페 가입하기</a>
+            {{/if}}
+        {{/if}}
+
+        <button class="chat-btn">카페 채팅</button>
+    </div>
+
+    <div class="sidebar-box member-news">
+        <h4>멤버 소식</h4>
+        <div class="sub-tabs">
+            <span class="active">방문</span> <span class="divider">|</span> <span>신입</span>
+        </div>
+        <ul>
+            <li>멤버이름1</li>
+            <li>멤버이름2</li>
+            <li>멤버이름3</li>
+            <li>멤버이름4</li>
+        </ul>
+    </div>
+
+    <div class="sidebar-box member-ranking">
+        <h4>지난주 멤버 랭킹</h4>
+        <div class="sub-tabs">
+            <span class="active">댓글</span> <span class="divider">|</span> <span>게시글</span>
+        </div>
+        <ol>
+            <li>1. 멤버A</li>
+            <li>2. 멤버B</li>
+            <li>3. 멤버C</li>
+            <li>4. 멤버D</li>
+            <li>5. 멤버E</li>
+        </ol>
+    </div>
+
+    <div class="sidebar-box clock-widget">
+        <span class="ampm" id="clock-ampm">PM</span>
+        <strong class="time" id="clock-time">00:00</strong>
+    </div>
+
+    <div class="sidebar-footer">
+        <a href="#" class="leave-cafe">카페탈퇴하기</a>
+    </div>
+</aside>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('clock-ampm').innerText = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        document.getElementById('clock-time').innerText = `${String(hours).padStart(2, '0')}:${minutes}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>

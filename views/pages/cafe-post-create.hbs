@@ -1,0 +1,20 @@
+<div id="cafe-post-create">
+    <div class="post-create-wrap">
+        <form id="cafe-post-create-form" data-cafe-id="{{cafe.id}}" data-cafe-address="{{cafe.address}}" action="/api/cafe/post" method="POST">
+
+            <div class="post-create-header">
+                <h2 class="page-title">카페 글쓰기</h2>
+                <button type="submit" class="submit-btn">등록</button>
+            </div>
+
+            <div class="editor-container">
+
+                <input type="text" name="title" class="title-input" placeholder="제목을 입력해 주세요." maxlength="100" required>
+
+                <textarea name="content" class="content-textarea" placeholder="내용을 입력해 주세요." maxlength="65535" required></textarea>
+
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/js/cafe-post-create.js"></script>

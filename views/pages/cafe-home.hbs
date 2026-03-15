@@ -1,0 +1,56 @@
+<div id="cafe-home">
+    <div class="post-list-wrapper">
+
+        <div class="feed-header">
+            <h2 class="feed-title">전체 게시글</h2>
+        </div>
+
+        <div class="post-feed" id="post-list-container" data-address="{{cafe.address}}">
+            {{#each postData.posts}}
+            <div class="post-item">
+                <div class="post-main">
+                    <a href="/cafe/{{@root.cafe.address}}/post/{{this.id}}" class="post-title">{{this.title}}</a>
+                </div>
+                <div class="post-side">
+                    <div class="post-author-info">
+                        <span class="author-name">{{this.nickname}}</span>
+                        <span class="author-date local-date" data-utc="{{toISOString this.createdAt}}"></span>
+                    </div>
+                    <div class="post-meta">
+                        <span class="meta-item">조회 {{this.viewCount}}</span>
+                        <span class="meta-item"><i class="fa-regular fa-heart"></i> {{this.likeCount}}</span>
+                        <span class="meta-item"><i class="fa-regular fa-comment"></i> {{this.commentCount}}</span>
+                    </div>
+                </div>
+                {{#if this.thumbnailUrl}}
+                <div class="post-thumbnail">
+                    <img src="{{this.thumbnailUrl}}" alt="썸네일">
+                </div>
+                {{/if}}
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    {{!-- 페이지네이션 --}}
+    <div id="pagination-container" class="pagination" data-current-page="{{postData.page}}"
+        data-total-pages="{{postData.totalPages}}">
+    </div>
+
+    <div class="search-area">
+        <select class="search-select">
+            <option>전체기간</option>
+        </select>
+        <select class="search-select">
+            <option>글 + 댓글</option>
+            <option>제목만</option>
+        </select>
+        <div class="search-input-wrap">
+            <input type="text" placeholder="검색어를 입력해주세요" class="search-input">
+            <button class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+</div>
+<script src="/js/utils/date-format.js"></script>
+<script src="/js/utils/pagination.js"></script>
+<script src="/js/cafe-home.js"></script>
