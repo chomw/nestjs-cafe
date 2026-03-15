@@ -14,7 +14,7 @@
                 <div class="post-side">
                     <div class="post-author-info">
                         <span class="author-name">{{this.nickname}}</span>
-                        <span class="author-date">{{formatDateOnly this.createdAt}}</span>
+                        <span class="author-date local-date" data-utc="{{toISOString this.createdAt}}"></span>
                     </div>
                     <div class="post-meta">
                         <span class="meta-item">조회 {{this.viewCount}}</span>
@@ -51,5 +51,6 @@
         </div>
     </div>
 </div>
+<script src="/js/utils/date-format.js"></script>
 <script src="/js/utils/pagination.js"></script>
 <script src="/js/cafe-home.js"></script>

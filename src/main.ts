@@ -35,27 +35,21 @@ async function bootstrap() {
         console.error(`[HBS 에러] Partials 폴더를 찾을 수 없습니다: ${partialsDir}`);
     }
 
-    hbs.registerHelper('formatDate', (dateObj) => {
-        if (!dateObj) return '';
+    hbs.registerHelper('toISOString', function (date) {
+        if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+            return '';
+        }
 
-        const d = new Date(dateObj);
-        const yyyy = d.getFullYear();
-        const mm = String(d.getMonth() + 1).padStart(2, '0');
-        const dd = String(d.getDate()).padStart(2, '0');
+        // NOTE: Date.toISOString()를 쓰지 않는 이유는 dateObj가 이미 UTC이기 때문이다
+        // T, Z만 잘 붙여준다
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
 
-        const hh = String(d.getHours()).padStart(2, '0');
-        const min = String(d.getMinutes()).padStart(2, '0');
+        const hh = String(date.getHours()).padStart(2, '0');
+        const min = String(date.getMinutes()).padStart(2, '0');
 
-        return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
-    });
-
-    hbs.registerHelper('formatDateOnly', function (dateString) {
-        if (!dateString) return '';
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
+        return `${yyyy}-${mm}-${dd}T${hh}:${min}Z`;
     });
 
     app.setViewEngine('hbs');
