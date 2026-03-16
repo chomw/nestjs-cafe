@@ -35,3 +35,11 @@ export enum CafePublicType {
   PRIVATE = 1,  // 비공개
   APPROVAL = 2, // 초대승인 (가입 승인 필요)
 };
+
+/**
+ * 캐시 설정 기본값
+ */
+export const CacheDefault = {
+  RECOMMENDED_CAFE_LIMIT: 1000,  // 추천 카페 캐싱 개수
+  CACHE_TTL: 3600,               // 캐시 만료 시간
+} as const;

@@ -7,7 +7,7 @@ import { ErrorCode } from '../common/constants/error-code.constant';
 import { ErrorMessageMap } from '../common/constants/error-message.constant';
 import { BusinessException } from 'src/common/exceptions/business.exception';
 import { CafeMember } from './entities/cafe-member.entity';
-import { CafeMemberLevel, CafeMemberStatus, CafePublicType } from './constants/cafe.constant';
+import { CacheDefault, CafeMemberLevel, CafeMemberStatus, CafePublicType } from './constants/cafe.constant';
 import { CafePost } from './entities/cafe-post.entity';
 import { CreateCafeMemberDto } from './dto/create-cafe-member.dto';
 
@@ -17,7 +17,6 @@ export class CafeService {
   // 캐싱을 위한 멤버 변수들
   private cachedRecommendCafes: any[] | null = null; // 캐싱된 데이터를 담을 곳
   private lastCacheTime: number = 0;                 // 마지막으로 DB에서 가져온 시간 (Timestamp)
-  private readonly CACHE_TTL = 10 * 60 * 1000;       // 10분 (10분 * 60초 * 1000밀리초)
 
   constructor(
     @InjectRepository(Cafe)
@@ -250,7 +249,7 @@ export class CafeService {
     const currentTime = Date.now();
 
     // 캐시 히트(Cache Hit) - 데이터가 있고 10분이 안 지났으면 캐시 반환!
-    if (this.cachedRecommendCafes && (currentTime - this.lastCacheTime < this.CACHE_TTL)) {
+    if (this.cachedRecommendCafes && (currentTime - this.lastCacheTime < CacheDefault.CACHE_TTL)) {
       return this.cachedRecommendCafes;
     }
 
@@ -262,7 +261,7 @@ export class CafeService {
         member_count: 'DESC',    // 1순위: 멤버 수가 많은 순서 (내림차순)
         last_login_date: 'DESC', // 2순위: 멤버 수가 같다면 최근 로그인(활동)한 순서 (내림차순)
       },
-      take: 10, 
+      take: CacheDefault.RECOMMENDED_CAFE_LIMIT, 
     });
 
     const mappedCafes = cafes.map(cafe => ({

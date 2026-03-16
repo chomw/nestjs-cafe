@@ -40,7 +40,7 @@ services:
     container_name: cafe_api
     restart: always
     ports:
-      - '80:3000'
+      - '3000:3000'
     env_file:
       - env/.env.production
     # db와 redis가 'healthy(건강함)' 상태가 될 때까지 api 실행을 대기함!
