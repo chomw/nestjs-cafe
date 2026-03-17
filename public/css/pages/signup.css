@@ -1,213 +1,250 @@
+/* --- 회원가입 폼 전체 래퍼 --- */
 #signup {
-
     background-color: #ffffff;
-    /* 흰색 배경 */
     padding: 40px 50px;
-    /* 상하 40px, 좌우 50px의 넉넉한 안쪽 여백 */
     border-radius: 8px;
-    /* 모서리를 살짝 둥글게 */
     border: 1px solid #e5e7eb;
-    /* 연한 회색 테두리 추가 */
     margin-top: 40px;
-    /* 위쪽 여백 (화면 천장에 붙지 않게) */
     margin-bottom: 40px;
-    /* 아래쪽 여백 */
-
     box-sizing: border-box;
-    /* 브라우저 기본 box-sizing 충돌 방지 */
+}
 
-    h2,
-    #signup_form {
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+#signup h2,
+#signup #signup_form {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-    /* 전체 폼 한 줄 컨테이너 */
-    .form-item {
-        display: flex;
-        align-items: center;
-        padding: 15px 0;
-        border-bottom: 1px solid #f0f0f0;
-        max-width: 500px;
-        margin: 0 auto;
-    }
+/* 전체 폼 한 줄 컨테이너 */
+#signup .form-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+    max-width: 500px;
+    margin: 0 auto;
+}
 
-    /* --- 왼쪽 라벨 스타일 --- */
-    .label-area {
-        width: 140px;
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-    }
+/* --- 왼쪽 라벨 스타일 --- */
+#signup .label-area {
+    width: 140px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+}
 
-    .label-text {
-        font-size: 15px;
-        font-weight: 700;
-        color: #333;
-    }
+#signup .label-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+}
 
-    /* 필수 표시 (*) */
-    .required {
-        color: var(--vscode-blue);
-        margin-left: 4px;
-        margin-right: 6px;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 1;
-    }
+/* 필수 표시 (*) */
+#signup .required {
+    /* 구형 브라우저를 위한 이중 선언 (Fallback) */
+    color: #03c75a; 
+    color: var(--vscode-blue, #03c75a);
+    margin-left: 4px;
+    margin-right: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1;
+}
 
-    /* --- 오른쪽 입력창 스타일 --- */
-    .input-area {
-        flex-grow: 1;
-    }
+/* --- 오른쪽 입력창 스타일 --- */
+#signup .input-area {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
 
-    .custom-input {
-        width: 100%;
-        height: 46px;
-        padding: 0 14px;
-        border: 1px solid #ddd;
-        border-radius: 0;
-        background-color: #fff;
-        font-size: 14px;
-        color: #333;
-        box-sizing: border-box;
-        transition: border-color 0.2s;
-    }
+#signup .custom-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-transition: border-color 0.2s;
+    transition: border-color 0.2s;
+}
 
-    .custom-input:focus {
-        outline: none;
-        border-color: var(--vscode-blue);
-        box-shadow: 0 0 0 2px rgba(3, 199, 90, 0.1);
-    }
+#signup .custom-input:focus {
+    outline: none;
+    border-color: #03c75a;
+    border-color: var(--vscode-blue, #03c75a);
+    box-shadow: 0 0 0 2px rgba(3, 199, 90, 0.1);
+}
 
-    .custom-input::placeholder {
-        color: #999;
-    }
+#signup .custom-input::placeholder {
+    color: #999;
+}
 
-    /* --- 프로필 아이콘(이미지) 섹션 --- */
-    .icon-preview-box {
-        position: relative;
-        width: 90px;
-        height: 90px;
-        background-color: #e4e6eb;
-        border-radius: 26px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-    }
+/* --- 프로필 아이콘(이미지) 섹션 --- */
+#signup .icon-preview-box {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    background-color: #e4e6eb;
+    border-radius: 26px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+}
 
-    .default-icon {
-        font-size: 40px;
-        color: #fff;
-    }
+#signup .default-icon {
+    font-size: 40px;
+    color: #fff;
+}
 
-    /* 추가: 미리보기 이미지 스타일 */
-    #image_preview {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        /* 비율을 유지하며 박스를 꽉 채움 */
-        border-radius: 26px;
-        /* 부모와 동일한 곡률 적용 */
-    }
+/* 추가: 미리보기 이미지 스타일 */
+#signup #image_preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 26px;
+}
 
-    .camera-btn {
-        position: absolute;
-        bottom: -4px;
-        right: -4px;
-        width: 28px;
-        height: 28px;
-        background-color: #555;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 12px;
-        cursor: pointer;
-        z-index: 10;
-        /* 추가: 미리보기 이미지 위로 버튼이 올라오도록 설정 */
-    }
+#signup .camera-btn {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 28px;
+    height: 28px;
+    background-color: #555;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    color: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: 10;
+}
 
-    .icon-desc {
-        margin-left: 16px;
-        font-size: 13px;
-        color: #666;
-        line-height: 1.5;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+#signup .icon-desc {
+    margin-left: 16px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
 
-    /* 추가: 파일명 텍스트 스타일 */
-    .file-name-text {
-        margin-top: 8px;
-        font-size: 12px;
-        color: var(--vscode-blue);
-        /* 네이버 카페 스타일의 그린 포인트 컬러 */
-        font-weight: bold;
-        word-break: break-all;
-    }
+/* 추가: 파일명 텍스트 스타일 */
+#signup .file-name-text {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #03c75a;
+    color: var(--vscode-blue, #03c75a);
+    font-weight: bold;
+    word-break: break-all;
+}
 
-    /* --- 구분선 --- */
-    .divider {
-        height: 1px;
-        background-color: #e5e7eb;
+/* --- 구분선 --- */
+#signup .divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
+/* --- 공통 유틸리티 --- */
+#signup .flex-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
 
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
+/* --- 하단 버튼 영역 --- */
+#signup .submit-area {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    /* gap: 10px; 제거 */
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 
-    /* --- 공통 유틸리티 --- */
-    .flex-row {
-        display: flex;
-        align-items: center;
-    }
+/* gap 역할을 대신할 인접 형제 선택자 마진 */
+#signup .submit-area > * + * {
+    margin-left: 10px;
+}
 
-    /* --- 하단 버튼 영역 --- */
-    .submit-area {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 50px;
-        margin-bottom: 50px;
-    }
+#signup .btn-cancel,
+#signup .btn-submit {
+    min-width: 120px;
+    height: 48px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+}
 
-    .btn-cancel,
-    .btn-submit {
-        min-width: 120px;
-        height: 48px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: opacity 0.2s;
-    }
+#signup .btn-cancel:hover,
+#signup .btn-submit:hover {
+    opacity: 0.8;
+}
 
-    .btn-cancel:hover,
-    .btn-submit:hover {
-        opacity: 0.8;
-    }
+#signup .btn-cancel {
+    background-color: #eff0f2;
+    color: #333;
+}
 
-    .btn-cancel {
-        background-color: #eff0f2;
-        color: #333;
-    }
-
-    .btn-submit {
-        background-color: var(--vscode-blue-bg, #e8f5e9);
-        /* Fallback 컬러 추가 */
-        color: var(--vscode-blue, #03c75a);
-        /* 네이버 그린 Fallback 추가 */
-    }
+#signup .btn-submit {
+    /* 구형 기기를 위한 확실한 Fallback 설정 */
+    background-color: #e8f5e9; 
+    background-color: var(--vscode-blue-bg, #e8f5e9);
+    color: #03c75a;
+    color: var(--vscode-blue, #03c75a);
 }
 
 @media screen and (min-width: 1024px) {

@@ -1,119 +1,130 @@
-#sidebar_left {
-    .sidebar-left {
-        width: 220px;
-        /* 네이버 사이드바 기본 폭 */
-        background-color: #fff;
-        border-right: 1px solid #e5e7eb;
-        padding: 15px 0;
-        box-sizing: border-box;
-    }
+#sidebar_left .sidebar-left {
+    width: 220px;
+    /* 네이버 사이드바 기본 폭 */
+    background-color: #fff;
+    border-right: 1px solid #e5e7eb;
+    padding: 15px 0;
+    box-sizing: border-box;
+}
 
-    /* 메뉴 리스트 초기화 */
-    .menu-list,
-    .category-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+/* 메뉴 리스트 초기화 */
+#sidebar_left .menu-list,
+#sidebar_left .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-    /* --- 메뉴 아이템 스타일 --- */
-    .menu-item {
-        display: flex;
-        align-items: center;
-        padding: 11px 20px;
-        text-decoration: none;
-        color: var(--text-main);
-        font-size: 15px;
-        font-weight: 500;
-        transition: background-color 0.2s;
-        position: relative;
-        /* 뱃지 정렬용 */
-    }
+/* --- 메뉴 아이템 스타일 --- */
+#sidebar_left .menu-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 11px 20px;
+    text-decoration: none;
+    /* 변수 미지원 기기를 위한 기본 글자색 Fallback */
+    color: #333; 
+    color: var(--text-main, #333);
+    font-size: 15px;
+    font-weight: 500;
+    -webkit-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+    position: relative;
+    /* 뱃지 정렬용 */
+}
 
-    .menu-item:hover {
-        background-color: var(--bg-hover);
-    }
+#sidebar_left .menu-item:hover {
+    /* 변수 미지원 기기를 위한 호버 배경색 Fallback */
+    background-color: #f4f5f7; 
+    background-color: var(--bg-hover, #f4f5f7);
+}
 
-    /* [활성화 상태] 초록색 포인트 */
-    .menu-item.active {
-        color: var(--vscode-blue);
-        /* 글자색: VSCode Blue */
-        background-color: var(--vscode-blue-bg);
-        /* 배경색: 연한 Blue */
-        font-weight: 700;
-        border-radius: 8px;
-        /* 배경색이 생겼으니 모서리를 둥글게 */
-    }
+/* [활성화 상태] 초록색 포인트 */
+#sidebar_left .menu-item.active {
+    /* 글자색: 네이버 그린 (VSCode Blue 변수명 재활용 대응) */
+    color: #03c75a; 
+    color: var(--vscode-blue, #03c75a);
+    /* 배경색: 연한 민트/그린 */
+    background-color: #e8f5e9; 
+    background-color: var(--vscode-blue-bg, #e8f5e9);
+    font-weight: 700;
+    border-radius: 8px;
+    /* 배경색이 생겼으니 모서리를 둥글게 */
+}
 
-    /* --- 아이콘 스타일 (Font Awesome) --- */
-    .menu-item .icon {
-        width: 24px;
-        /* 아이콘 영역 고정 (정렬 맞춤) */
-        font-size: 18px;
-        /* 아이콘 크기 */
-        margin-right: 12px;
-        text-align: center;
-        color: var(--text-sub);
-        /* 기본 회색 */
-    }
+/* --- 아이콘 스타일 (Font Awesome) --- */
+#sidebar_left .menu-item .icon {
+    width: 24px;
+    /* 아이콘 영역 고정 (정렬 맞춤) */
+    font-size: 18px;
+    /* 아이콘 크기 */
+    margin-right: 12px;
+    text-align: center;
+    /* 보조 글자색 Fallback */
+    color: #666; 
+    color: var(--text-sub, #666);
+}
 
-    /* 활성화되면 아이콘도 파란색 */
-    .menu-item.active .icon {
-        color: var(--vscode-blue);
-    }
+/* 활성화되면 아이콘도 포인트 색상으로 */
+#sidebar_left .menu-item.active .icon {
+    color: #03c75a;
+    color: var(--vscode-blue, #03c75a);
+}
 
-    /* --- 뱃지(Badge) 스타일 --- */
-    .badge {
-        margin-left: auto;
-        /* 우측 끝으로 밀기 */
-        font-size: 11px;
-        line-height: 1;
-    }
+/* --- 뱃지(Badge) 스타일 --- */
+#sidebar_left .badge {
+    margin-left: auto;
+    /* 우측 끝으로 밀기 */
+    font-size: 11px;
+    line-height: 1;
+}
 
-    .badge.beta {
-        color: #fb4335;
-        font-style: italic;
-        font-weight: bold;
-    }
+#sidebar_left .badge.beta {
+    color: #fb4335;
+    font-style: italic;
+    font-weight: bold;
+}
 
-    .badge.count {
-        background-color: #ef402f;
-        color: white;
-        padding: 2px 6px;
-        border-radius: 10px;
-        font-weight: bold;
-    }
+#sidebar_left .badge.count {
+    background-color: #ef402f;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+}
 
-    .badge.new {
-        background-color: #ef402f;
-        color: white;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 16px;
-        font-weight: bold;
-        font-size: 10px;
-    }
+#sidebar_left .badge.new {
+    background-color: #ef402f;
+    color: white;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    font-weight: bold;
+    font-size: 10px;
+}
 
-    /* --- 구분선 --- */
-    .divider {
-        height: 1px;
-        background-color: #e5e7eb;
-        margin: 10px 20px;
-    }
+/* --- 구분선 --- */
+#sidebar_left .divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 10px 20px;
+}
 
-    /* --- 하단 카테고리 링크 --- */
-    .category-item {
-        display: block;
-        padding: 8px 20px;
-        color: var(--text-sub);
-        text-decoration: none;
-        font-size: 14px;
-    }
+/* --- 하단 카테고리 링크 --- */
+#sidebar_left .category-item {
+    display: block;
+    padding: 8px 20px;
+    color: #666; 
+    color: var(--text-sub, #666);
+    text-decoration: none;
+    font-size: 14px;
+}
 
-    .category-item:hover {
-        text-decoration: underline;
-    }
-
+#sidebar_left .category-item:hover {
+    text-decoration: underline;
 }

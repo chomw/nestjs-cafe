@@ -1,149 +1,177 @@
-#home {
+/* 탭 영역 스타일 */
+#home .tab-area {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    /* gap: 8px; 대신 마진으로 대체 */
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ebecef;
+    margin-bottom: 20px;
+}
 
-    /* 탭 영역 스타일 */
-    .tab-area {
-        display: flex;
-        gap: 8px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #ebecef;
-        margin-bottom: 20px;
-    }
+/* gap 역할을 대신할 인접 형제 선택자 마진 */
+#home .tab-area .tab + .tab {
+    margin-left: 8px;
+}
 
-    .tab {
-        border: none;
-        background: transparent;
-        font-size: 15px;
-        color: #666;
-        padding: 8px 16px;
-        border-radius: 20px;
-        /* 네이버 스타일 알약 모양 */
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
+#home .tab {
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color: #666;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    -webkit-transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
+}
 
-    .tab.active {
-        background-color: var(--vscode-blue-bg);
-        color: var(--vscode-blue);
-        font-weight: bold;
-    }
+#home .tab.active {
+    /* CSS 변수(var)를 지원하지 않는 극구형 기기를 위한 폴백(대체) 색상 */
+    background-color: #e6f0fa; 
+    background-color: var(--vscode-blue-bg);
+    color: #0066cc; 
+    color: var(--vscode-blue);
+    font-weight: bold;
+}
 
-    .tab:hover:not(.active) {
-        background-color: #f4f5f7;
-    }
+#home .tab:hover:not(.active) {
+    background-color: #f4f5f7;
+}
 
-    /* 카페 목록 스타일 */
-    .cafe-card {
-        background: #fff;        
-        padding: 10px 10px 10px 10px;
-        margin-bottom: 15px;
-        border: 1px solid #e5e7ea;
-        border-radius: 8px;
-    }    
+/* 카페 목록 스타일 */
+#home .cafe-card {
+    background: #fff;        
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e5e7ea;
+    border-radius: 8px;
+}    
 
-    .cafe-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-    }
+#home .cafe-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-    /* 카페 이미지 (둥근 형태) */
-    .cafe-thumbnail {
-        width: 48px;
-        /* 리스트에 맞게 90px 대신 적절한 크기로 축소 */
-        height: 48px;
-        border-radius: 16px;
-        /* 둥근 사각형 (Squircle) */
-        background-color: #e4e6eb;
-        /* 이미지가 없을 때의 기본 회색 배경 */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        margin-right: 15px;
-        flex-shrink: 0;
+/* 카페 이미지 (둥근 형태) */
+#home .cafe-thumbnail {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background-color: #e4e6eb;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    overflow: hidden;
+    margin-right: 15px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+}
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+#home .cafe-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        .default-icon {
-            font-size: 22px;
-            /* 48px 박스에 어울리도록 아이콘 크기 축소 */
-            color: #fff;
-        }
-    }
+#home .cafe-thumbnail .default-icon {
+    font-size: 22px;
+    color: #fff;
+}
 
-    .default-icon {
-        font-size: 20px;
-        color: #fff;
-        /* 아이콘 흰색 */
-    }
+#home .default-icon {
+    font-size: 20px;
+    color: #fff;
+}
 
-    .cafe-title-area {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
+#home .cafe-title-area {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
 
-    .cafe-name {
-        font-size: 16px;
-        font-weight: bold;
-        color: #222;
-        text-decoration: none;
+/* gap: 4px; 역할을 대신할 선택자 */
+#home .cafe-title-area > * + * {
+    margin-top: 4px;
+}
 
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+#home .cafe-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    text-decoration: none;
+}
 
-    .new-post-count {
-        font-size: 13px;
-        color: #888;
-    }
+#home .cafe-name:hover {
+    text-decoration: underline;
+}
 
-    /* 최근 게시물 리스트 */
-    .post-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+#home .new-post-count {
+    font-size: 13px;
+    color: #888;
+}
 
-    .post-list li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 6px 0;
-    }
+/* 최근 게시물 리스트 */
+#home .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-    .post-title {
-        color: #444;
-        font-size: 14px;
-        text-decoration: none;
-        flex: 1;
+#home .post-list li {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 6px 0;
+}
 
-        /* 텍스트가 너무 길면 말줄임표(...) 처리 */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-right: 15px;
+#home .post-title {
+    color: #444;
+    font-size: 14px;
+    text-decoration: none;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 15px;
+}
 
-        &:hover {
-            text-decoration: underline;
-            color: #222;
-        }
-    }
+#home .post-title:hover {
+    text-decoration: underline;
+    color: #222;
+}
 
-    .post-meta {
-        font-size: 13px;
-        color: #888;
-        flex-shrink: 0;
-        /* 우측 정보가 찌그러지지 않게 고정 */
+#home .post-meta {
+    font-size: 13px;
+    color: #888;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+}
 
-        .dot {
-            margin: 0 4px;
-            color: #ccc;
-        }
-    }
+#home .post-meta .dot {
+    margin: 0 4px;
+    color: #ccc;
 }
