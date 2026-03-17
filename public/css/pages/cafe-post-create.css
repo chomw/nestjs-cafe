@@ -1,105 +1,129 @@
-#cafe-post-create {
+/* 글쓰기 페이지 전체 래퍼 (본문 박스) */
+#cafe-post-create .post-create-wrap {
+    width: 100%;
+    background: #fff;
+    /* 1. 헤더처럼 옅은 회색 테두리 추가 */
+    border: 1px solid #e5e7ea;
+    /* 2. 내부 글씨가 모서리에 붙지 않도록 상하좌우 여백 추가 */
+    padding: 30px 40px;
+    box-sizing: border-box;
+}
 
-    /* 글쓰기 페이지 전체 래퍼 (본문 박스) */
-    .post-create-wrap {
-        width: 100%;
-        background: #fff;
+/* 상단 타이틀 & 버튼 가로 배치 */
+#cafe-post-create .post-create-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #222;
+    margin-bottom: 20px;
+}
 
-        /* 1. 헤더처럼 옅은 회색 테두리 추가 */
-        border: 1px solid #e5e7ea;
-        /* 2. 내부 글씨가 모서리에 붙지 않도록 상하좌우 여백 추가 */
-        padding: 30px 40px;
-        box-sizing: border-box;
-    }
+#cafe-post-create .page-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+    margin: 0;
+}
 
-    /* 상단 타이틀 & 버튼 가로 배치 */
-    .post-create-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #222;
-        margin-bottom: 20px;
-    }
+/* 등록 버튼 */
+#cafe-post-create .submit-btn {
+    /* 변수 미지원 기기를 위한 Fallback 색상 (연한 그린 배경, 네이버 그린 텍스트) */
+    background-color: #e8f5e9;
+    background-color: var(--vscode-blue-bg, #e8f5e9);
+    color: #03c75a;
+    color: var(--vscode-blue, #03c75a);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+}
 
-    .page-title {
-        font-size: 20px;
-        font-weight: bold;
-        color: #222;
-        margin: 0;
-    }
+#cafe-post-create .submit-btn:hover {
+    background-color: #c8e6c9;
+}
 
-    /* 등록 버튼 */
-    .submit-btn {
-        background-color: var(--vscode-blue-bg);
-        color: var(--vscode-blue);
-        border: none;
-        padding: 8px 18px;
-        border-radius: 4px;
-        font-size: 13px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+/* 3. input과 textarea를 감싸던 테두리 제거 */
+#cafe-post-create .editor-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    min-height: 600px;
+    /* 기존에 있던 border, padding 속성 삭제 */
+    /* gap: 15px; 제거 */
+}
 
-    .submit-btn:hover {
-        background-color: #c8e6c9;
-    }
+/* gap 역할을 대신할 인접 형제 선택자 (세로 정렬이므로 margin-top 사용) */
+#cafe-post-create .editor-container > * + * {
+    margin-top: 15px;
+}
 
-    /* 3. input과 textarea를 감싸던 테두리 제거 */
-    .editor-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        min-height: 600px;
-        /* 기존에 있던 border, padding 속성 삭제 */
-    }
+/* 제목 입력창 */
+#cafe-post-create .title-input {
+    width: 100%;
+    background-color: #f4f5f7;
+    border: none;
+    padding: 14px 16px;
+    /* 좌우 패딩 16px */
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+    outline: none;
+    color: #222;
+    -webkit-transition: border-color 0.2s;
+    transition: border-color 0.2s;
+}
 
-    /* 제목 입력창 */
-    .title-input {
-        width: 100%;
-        background-color: #f4f5f7;
-        border: none;
-        padding: 14px 16px;
-        /* 좌우 패딩 16px */
-        border-radius: 6px;
-        font-size: 15px;
-        box-sizing: border-box;
-        outline: none;
-        color: #222;
-    }
+#cafe-post-create .title-input::placeholder {
+    color: #999;
+}
 
-    .title-input::placeholder {
-        color: #999;
-    }
+/* 본문 입력창 */
+#cafe-post-create .content-textarea {
+    width: 100%;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    min-height: 450px;
+    background-color: #fff;
 
-    /* 본문 입력창 */
-    .content-textarea {
-        width: 100%;
-        flex: 1;
-        min-height: 450px;
-        background-color: #fff;
+    /* 4. textarea 전용 회색 둥근 테두리 추가 */
+    border: 1px solid #ebecef;
+    border-radius: 8px;
 
-        /* 4. textarea 전용 회색 둥근 테두리 추가 */
-        border: 1px solid #ebecef;
-        border-radius: 8px;
+    /* 5. input의 글자 시작 위치와 동일하게 패딩 설정 */
+    padding: 14px 16px;
 
-        /* 5. input의 글자 시작 위치와 동일하게 패딩 설정 */
-        padding: 14px 16px;
+    resize: none;
+    font-size: 14px;
+    line-height: 1.6;
+    box-sizing: border-box;
+    outline: none;
+    color: #333;
+    -webkit-transition: border-color 0.2s;
+    transition: border-color 0.2s;
+}
 
-        resize: none;
-        font-size: 14px;
-        line-height: 1.6;
-        box-sizing: border-box;
-        outline: none;
-        color: #333;
-    }
+#cafe-post-create .content-textarea::placeholder {
+    color: #999;
+}
 
-    .content-textarea::placeholder {
-        color: #999;
-    }
-
-    /* 입력창이 선택되었을 때(focus) 살짝 강조 효과 주기 (선택사항) */
-    .content-textarea:focus {
-        border-color: #c5c8ce;
-    }
+/* 입력창이 선택되었을 때(focus) 살짝 강조 효과 주기 */
+#cafe-post-create .content-textarea:focus,
+#cafe-post-create .title-input:focus {
+    border-color: #c5c8ce;
 }
