@@ -14,7 +14,7 @@
 }
 
 .cafe-header-inner {
-    background-color: #2196F3; /* 네이버 카페 기본 블루 계열과도 잘 어울림 */
+    background-color: #2196F3; 
 
     /* 기하학적인 사선 레이어 겹치기 (면 분할 효과) */
     background-image: 
@@ -25,10 +25,7 @@
     /* 아래쪽에 살짝 깔리는 또 다른 어두운 면 */
     linear-gradient(10deg, transparent 65%, rgba(0, 0, 0, 0.08) 65%);
   
-    color: #ffffff;
-  
-  /* 기존의 흰색 헤더용 테두리는 제거 */
-  border-bottom: none;
+    color: #ffffff;  
 
     width: 1080px;                  /* 아래쪽 본문/사이드바 컨테이너와 너비 동일하게 */
     border: 1px solid #e5e7ea;
