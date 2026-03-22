@@ -14,7 +14,22 @@
 }
 
 .cafe-header-inner {
-    background: #fff;
+    background-color: #2196F3; /* 네이버 카페 기본 블루 계열과도 잘 어울림 */
+
+    /* 기하학적인 사선 레이어 겹치기 (면 분할 효과) */
+    background-image: 
+    /* 오른쪽 아래로 떨어지는 약간 어두운 사선 면 */
+    linear-gradient(135deg, transparent 45%, rgba(0, 0, 0, 0.06) 45%, rgba(0, 0, 0, 0.06) 70%, transparent 70%),
+    /* 왼쪽 위로 올라가는 아주 연한 흰색 사선 면 */
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 30%, transparent 30%),
+    /* 아래쪽에 살짝 깔리는 또 다른 어두운 면 */
+    linear-gradient(10deg, transparent 65%, rgba(0, 0, 0, 0.08) 65%);
+  
+    color: #ffffff;
+  
+  /* 기존의 흰색 헤더용 테두리는 제거 */
+  border-bottom: none;
+
     width: 1080px;                  /* 아래쪽 본문/사이드바 컨테이너와 너비 동일하게 */
     border: 1px solid #e5e7ea;
     padding: 30px 40px;             /* 텍스트가 테두리에 붙지 않도록 위아래 30px, 좌우 40px 여백 지정 */
@@ -34,7 +49,7 @@
 /* 링크 기본 스타일 초기화 */
 .cafe-home-link {
     text-decoration: none; /* 밑줄 제거 */
-    color: inherit; /* 기존 글자 색상(검은색/회색) 유지 */
+    color: #fff; /* 기존 글자 색상(검은색/회색) 유지 */
     display: block; /* 클릭 영역을 박스 전체로 넓힘 */
 }
 
@@ -82,6 +97,14 @@
     font-size: 16px;
     font-weight: 800;
     letter-spacing: -0.5px;
+    color: #fff;
+}
+
+.header-container {
+  /* 기존 흰색 배경을 대체 */
+  background: linear-gradient(120deg, #e0f2fe 0%, #fff7ed 100%);
+  border-bottom: 1px solid #e5e7eb; /* content area와 구분되는 연한 선 */
+  /* 필요시 padding 추가: padding: 20px; */
 }
 
 .cafe-header-content {
@@ -91,11 +114,11 @@
 .cafe-header-content .cafe-title {
     font-size: 32px;
     font-weight: bold;
-    color: #222;
+    color: #fff;
     margin-bottom: 8px;
 }
 
 .cafe-header-content .cafe-url {
     font-size: 13px;
-    color: #666;
+    color: #bebebe;
 }

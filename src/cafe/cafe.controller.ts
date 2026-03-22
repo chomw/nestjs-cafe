@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseFilters, UseInterceptors, UseGuards, Query, HttpStatus, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseFilters, UseInterceptors, UseGuards, Query, HttpStatus, DefaultValuePipe, ParseIntPipe, Req } from '@nestjs/common';
 import { CafeService } from './cafe.service';
 import { CreateCafeDto } from './dto/create-cafe.dto';
 import { UpdateCafeDto } from './dto/update-cafe.dto';
@@ -13,6 +13,8 @@ import { SsrOptionalAuthGuard } from 'src/auth/guards/ssr-optional-auth.guards';
 import { BusinessException } from 'src/common/exceptions/business.exception';
 import { ErrorCode } from 'src/common/constants/error-code.constant';
 import { PaginationDefault } from './constants/cafe.constant';
+import { CreateCommentDto } from './dto/create-comment.dto';
+import { CommentResponseDto } from './dto/comment-response.dto';
 
 @Controller('api/cafe')
 export class CafeController {
@@ -68,5 +70,17 @@ export class CafeController {
     }
 
     return await this.cafePostService.getPostList(cafe.id, page, limit);
+  }
+
+  @Post('post/:postId/comment')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(TransformInterceptor)
+  @UseFilters(HttpExceptionFilter)
+  async createComment(
+    @GetUser() user: any,
+    @Param('postId') postId: string,
+    @Body() dto: CreateCommentDto    
+  ): Promise<CommentResponseDto> {
+    return this.cafePostService.createComment(user.id, postId, dto);
   }
 }
