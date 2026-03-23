@@ -97,13 +97,6 @@
     color: #fff;
 }
 
-.header-container {
-  /* 기존 흰색 배경을 대체 */
-  background: linear-gradient(120deg, #e0f2fe 0%, #fff7ed 100%);
-  border-bottom: 1px solid #e5e7eb; /* content area와 구분되는 연한 선 */
-  /* 필요시 padding 추가: padding: 20px; */
-}
-
 .cafe-header-content {
     
 }

@@ -80,7 +80,8 @@ export class CafeController {
     @GetUser() user: any,
     @Param('postId') postId: string,
     @Body() dto: CreateCommentDto    
-  ): Promise<CommentResponseDto> {
-    return this.cafePostService.createComment(user.id, postId, dto);
+  ): Promise<CommentResponseDto[]> {
+    await this.cafePostService.createComment(user, postId, dto);
+    return await this.cafePostService.getCommentList(postId);
   }
 }

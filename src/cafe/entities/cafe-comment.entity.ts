@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'cafe_comment' })
-@Index('idx_comment_post_id', ['postId'])
 @Index('idx_comment_post_id_created_at', ['postId', 'createdAt']) // 정렬까지 고려한 복합 인덱스
 export class CafeComment {
   

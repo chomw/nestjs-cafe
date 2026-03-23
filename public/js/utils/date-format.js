@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    loadLocalDate();
+});
+
+window.loadLocalDate = loadLocalDate;
+
+function loadLocalDate() {
     // 1. '.local-time' 클래스를 가진 모든 날짜 요소를 찾습니다.
     const dateElements = document.querySelectorAll('.local-date');
 
@@ -27,10 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const utcString = el.getAttribute('data-utc');
 
         if (utcString) {
-            console.log('utcString: ' + utcString);
+
             // 핵심: 브라우저가 알아서 사용자의 로컬 시간(한국이면 KST)으로 객체를 생성합니다!
             const date = new Date(utcString);
-            
+
             const yyyy = date.getFullYear();
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const dd = String(date.getDate()).padStart(2, '0');
@@ -39,9 +45,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const min = String(date.getMinutes()).padStart(2, '0');
 
             const dateString = `${yyyy}-${mm}-${dd} ${hh}:${min}`;
-            console.log('textContent: ' + dateString);
+
             // 비어있던 <span> 태그 안에 예쁘게 조립된 날짜를 쏙 넣어줍니다.
             el.textContent = dateString;
         }
     });
-});
+}
+
+window.formatLocalDates = function (date) {
+    if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+        return '';
+    }
+
+    // NOTE: Date.toISOString()를 쓰지 않는 이유는 dateObj가 이미 UTC이기 때문이다
+    // T, Z만 잘 붙여준다
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}Z`;
+}

@@ -1,4 +1,4 @@
-<div id="cafe-post-detail">
+<div id="cafe-post-detail" data-post-id="{{post.id}}">
     <div class="post-detail-wrap">
 
         <div class="action-bar top-bar">
@@ -23,7 +23,8 @@
                     </div>
                     <div class="meta-info">
                         <span class="nickname">{{author.nickname}}</span>
-                        <div><span class="date-view local-time" data-utc="{{toISOString post.createdAt}}"></span><span class="date-view"> 조회 {{post.viewCount}}</span></div>
+                        <div><span class="date-view local-time" data-utc="{{toISOString post.createdAt}}"></span><span
+                                class="date-view"> 조회 {{post.viewCount}}</span></div>
                     </div>
                 </div>
             </div>
@@ -50,7 +51,7 @@
             <div class="comment-section">
                 <ul class="comment-list">
                     {{#each comments}}
-                    <li class="comment-item">                        
+                    <li class="comment-item">
                         <div class="avatar-wrap size-m">
                             <img src="{{this.profile_img}}" alt="프로필" class="avatar-img"
                                 onerror="this.src='/images/avatar-default.jpg'">
@@ -58,18 +59,18 @@
                         <div class="comment-content-area">
                             <div class="comment-author">{{this.nickname}}</div>
                             <div class="comment-text">{{this.content}}</div>
-                            <div class="comment-date local-date" data-utc="{{toISOString this.createdAt}}"></div>
+                            <div class="comment-date local-time" data-utc="{{toISOString this.createdAt}}"></div>
                         </div>
-                        <button class="comment-like-btn">♡</button>
+                        {{!-- <button class="comment-like-btn">♡</button> --}}
                     </li>
                     {{/each}}
                 </ul>
 
                 <div class="comment-write-box">
-                    <div class="comment-writer">{{currentUser.nickname}}</div>
-                    <textarea placeholder="댓글을 남겨보세요"></textarea>
+                    {{!-- <div class="comment-writer">{{user.nickname}}</div> --}}
+                    <textarea id="comment-input" placeholder="댓글을 남겨보세요"></textarea>
                     <div class="write-action">
-                        <button class="btn-primary">등록</button>
+                        <button id="submit-comment-btn" class="btn-primary">등록</button>
                     </div>
                 </div>
             </div>
