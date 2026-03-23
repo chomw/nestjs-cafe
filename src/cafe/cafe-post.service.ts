@@ -1,13 +1,16 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CafePost } from "./entities/cafe-post.entity";
-import { Repository } from "typeorm";
+import { Repository, DataSource, EntityManager } from "typeorm";
 import { CafeService } from "./cafe.service";
 import { CreateCafePostDto } from "./dto/create-cafe-post.dto";
 import { BusinessException } from "src/common/exceptions/business.exception";
 import { ErrorCode } from "src/common/constants/error-code.constant";
 import { CafeMember } from "./entities/cafe-member.entity";
 import { PaginationDefault } from "./constants/cafe.constant";
+import { CreateCommentDto } from "./dto/create-comment.dto";
+import { CommentResponseDto } from "./dto/comment-response.dto";
+import { CafeComment } from "./entities/cafe-comment.entity";
 
 
 @Injectable()
@@ -16,6 +19,9 @@ export class CafePostService {
         @InjectRepository(CafePost)
         private readonly cafePostRepository: Repository<CafePost>,
         private readonly cafeService: CafeService,
+        @InjectRepository(CafeComment)
+        private readonly cafeCommentRepository: Repository<CafeComment>,
+        private dataSource: DataSource,
     ) { }
 
     /**
@@ -161,5 +167,90 @@ export class CafePostService {
         });
 
         return postMap;
+    }
+    
+    /**
+     * 댓글 추가 
+     * 
+     * (1) CafePost.commentCount에 1을 증가시킨다
+     * (2) CafeComment 테이블에 INSERT
+     * 
+     * @param user 
+     * @param postId 
+     * @param dto 
+     * @returns 
+     */
+    async createComment(user: any, postId: string, dto: CreateCommentDto): Promise<CommentResponseDto> {
+        
+        const post = await this.cafePostRepository.findOneBy({
+            id: postId
+        });
+
+        if (!post) {
+            throw new BusinessException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        await this.cafeService.validateActiveMember(post.cafeId, user.id);
+
+        return await this.dataSource.transaction(async (manager: EntityManager) => {
+            
+            await manager.increment(CafePost, { id: postId }, 'commentCount', 1);
+
+            const newComment = manager.create(CafeComment, {
+                postId: postId,
+                userId: user.id,
+                content: dto.content
+            });
+
+            const savedComment = await manager.save(newComment);
+
+            return CommentResponseDto.from(savedComment, user.nickname, user.profile_img);
+        });
+    }
+
+    /**
+     * 게시글 ID로 댓글 목록을 얻는다
+     * 
+     * @param postId 게시글 ID
+     * @returns Promise<CommentResponseDto[]>
+     */
+    async getCommentList(postId: string): Promise<CommentResponseDto[]> {
+        
+        const post = await this.cafePostRepository.findOneBy({
+            id: postId
+        });
+
+        if (!post) {
+            throw new BusinessException(ErrorCode.POST_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        const comments = await this.cafeCommentRepository.find({
+            where: { postId: postId },
+            order: {
+                createdAt: 'ASC'
+            },
+            take: 100,
+        });
+
+        
+        if (comments.length === 0) {
+            return [];
+        }
+
+        const userIds = [...new Set(comments.map(comment => comment.userId))];
+
+        const members = await this.cafeService.getMemberList(post.cafeId, userIds);
+
+        const memberMap = new Map(members.map(member => [member.userId, member]));
+
+        const mappedComments = comments.map(comment => {
+            const author = memberMap.get(comment.userId);            
+            const nickname = author?.nickname || '';
+            const profile_img = author?.profile_img || '';
+
+            return CommentResponseDto.from(comment, nickname, profile_img);            
+        });
+
+        return mappedComments;
     }
 }

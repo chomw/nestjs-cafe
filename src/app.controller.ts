@@ -173,9 +173,10 @@ export class AppController {
   ) {
 
     // 서로 의존성이 없는 데이터는 Promise.all로 병렬 조회
-    const [cafe, post] = await Promise.all([
+    const [cafe, post, comments] = await Promise.all([
       this.cafeService.getCafeByAddress(address),
       this.cafePostService.getPost(postId),
+      this.cafePostService.getCommentList(postId)
     ]);
 
     // 필수 리소스가 하나라도 없으면 빠르게 홈으로 돌려보냄 (Early Return)
@@ -189,7 +190,7 @@ export class AppController {
     if (!author) {
       throw new BusinessException(ErrorCode.NOT_CAFE_MEMBER, HttpStatus.FORBIDDEN);
     }
-    
+
     return {
       layout: 'layouts/cafe-layout',
       showSidebar: false,
@@ -198,6 +199,7 @@ export class AppController {
       cafe,
       post,
       author, 
+      comments
     };
   }
 
